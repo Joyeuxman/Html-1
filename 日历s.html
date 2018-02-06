@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        
+        header {
+            width: 420px;
+            height: 50px;
+            text-align: right;
+            margin: 0 auto;
+            margin-bottom: 0;
+            background-color: red;
+        }
+        
+        #nian,
+        #yue {
+            float: left;
+            font-size: 1.5rem;
+            margin-left: 10px;
+            margin-top: 10px;
+            color: white;
+        }
+        
+        input {
+            background-color: red;
+            color: white;
+            border: none;
+            position: relative;
+            top: 20px;
+            left: -20px;
+        }
+        table{
+            width: 420px;
+            height: 50px;
+            background-color: red;
+            color: white;
+            text-align: center;
+            margin: 0 auto;
+        }
+        p{
+            width: 420px;
+            margin: 0 auto;
+            display: flex;
+            background-color: red;
+            color: white;
+            text-align: center;
+        }
+        p>span{
+            flex: auto
+        }
+        table{
+            width: 420px;
+            height: 360px;
+            margin: 0 auto;
+            background-color: red;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <span id="nian">2016年</span><span id="yue">7月</span>
+        <input id="back" type="button" value="<" onclick="back()">
+        <input id="forward" type="button" value=">" onclick="forward()">
+    </header>
+    <p>
+        <span>一</span>
+        <span>二</span>
+        <span>三</span>
+        <span>四</span>
+        <span>五</span>
+        <span>六</span>
+        <span>日</span>
+    </p>
+    <table>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <script>
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth();
+        function run(year){
+            return (year%400==0 ? res=(year%400==0 ? 1:0):res=(year%4==0 ? 1:0));
+        }//三目运算符判断这一年是不是闰年，是的话返回一，不是就返回0
+        var mdays = new Array(31,28+run(year),31,30,31,30,31,31,30,31,30,31);//各月份儿的总天数
+        function back(){
+            month= month-1;
+            if(month<0){
+                year=year-1;
+                month=11;
+            }
+            document.getElementById('nian').innerHTML=year+'年';
+            document.getElementById('yue').innerHTML=month+1+'月';
+            show();
+        }   
+        function forward(){
+            month=month+1;
+            if(month>11){
+                year=year+1;
+                month=0 ;
+            }
+            document.getElementById('nian').innerHTML=year+'年';
+            document.getElementById('yue').innerHTML=month+1+'月';
+            show();
+        }
+        function show(){
+        var day =date.getDate();
+        console.log(year,month,day);
+        var date1 = new Date(year,month,1);//给new Date初始化日期和时间,为2016年7月1号
+        console.log(date1);//2016-06-30
+        var day1 = date1.getDay();// date1.getDay()表示得到这天星期几
+        console.log(day1);
+        var td = document.getElementsByTagName('td');
+        console.log(td);
+        for(var i=0;i <6 ;i++){
+            for(var j=0; j <7;j++){//表格每一行的单元格
+                var num=i*7+j;
+                if(day1==0){
+                    day1=7;
+                }
+                console.log(day1);
+                if(month-1==-1){
+                    mdays[month-1]=31;
+                }
+                var daynum=num-day1+2;
+                td[num].style.color='white';//重置字体颜色，非常重要
+                if(daynum<=0){
+                    td[num].style.color='gray';
+                    daynum=mdays[month-1]-Math.abs(daynum);
+                }
+                if(daynum>mdays[month]){
+                    td[num].style.color='gray';
+                    daynum=daynum-mdays[month];
+                }
+                // ( daynum <=0 ? daynum=mdays[month-1]-Math.abs(daynum): daynum=(daynum>mdays[month] ? daynum=daynum-mdays[month]:daynum))
+                //嵌套的三目运算符
+                td[num].innerHTML = daynum;
+                
+            }
+        }
+        }
+        show();
+    </script>
+</body>
+
+</html>

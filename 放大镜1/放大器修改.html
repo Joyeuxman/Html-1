@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>放大镜效果2</title>
+    <style>
+        html{
+            height: 100vh;
+        }
+        body{
+            margin: 0;
+            height: 100vh;
+        }
+    .imgbox{
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        background-color: #f00;
+    }   
+    .probox {
+        position:absolute;
+        top: 100px;
+        left: 100px;
+        width: 300px;
+        height: 300px;
+        background-image: url(images/rose.jpg);
+        background-size:100% 100%;
+        border: 1px solid #000;
+        z-index: 100;
+        
+    }    
+    .hoverbox{
+        display: none;
+        /*visibility: hidden;*/
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #09f;
+        border: 1px solid #09f;
+        height:80px;
+        width: 80px;
+        cursor: move;
+    }
+   .showbox{ 
+        display: none;     
+        position: absolute;
+        left:403px;
+        top: 100px;
+        width: 300px;
+        height: 300px;
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #0f0;     
+    }
+    
+    .showbox img{
+        position: absolute;
+        height: 1200px;
+        width: 1200px;
+    }
+    /*.probox:hover{
+        display: block;
+        opacity: 0.6;
+    }*/
+    .hoverbox:hover{
+        display: block;
+        opacity: 0.3;
+    }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="imgbox">
+        
+        <div class="probox">
+            <div class="hoverbox">这是鼠标位置</div>
+        </div>
+
+        <div class="showbox">
+            <img src="images/rose.jpg" class="hide" alt="" />
+        </div>
+
+    </div>
+    <script>            
+    //    var img = document.querySelector('div[class="probox"]>img');
+       var img = document.querySelector('div[class="probox"]');       
+       var hover = document.querySelector('div[class="hoverbox"]');
+       var l,t,x,y,w,h,time
+       var shows = document.querySelector('div[class="showbox"]');
+       var show = document.querySelector('div[class="showbox"]>img');
+    //    console.log('标签====',img,hover,show,shows);
+       console.log(img.offsetTop);
+       // 这个函数是来得到图片区域的距离浏览器的距离 和鼠标当前位置                
+       function Zoomhover(){          
+       t = img.offsetTop;
+       l = img.offsetLeft;   
+       console.log('长度===',t,l);             
+       img.addEventListener('mouseover',function(e){
+           getting(e);
+           hover.style.opacity = '0.3';                             
+           hover.style.display = 'block';
+           shows.style.display = 'block';
+           w = hover.offsetWidth; 
+           h = hover.offsetHeight;
+           console.log('长度==' + w,h)
+        //    function s(){Zoom(img,hover,l,t,x,y,w,h,show)}
+        //    time =setTimeout(s,1);
+       });           
+        function getting(e){
+           x = e.pageX;
+           y = e.pageY; 
+           console.log('坐标：' + 'x=' + x,'y=' + y);
+        }
+        img.addEventListener('mousemove',function(e){  
+           f1(e);          
+        });
+        hover.addEventListener('mousemove',function(e){
+           f1(e);               
+        });
+        img.addEventListener('mouseout',function(){
+           hover.style.display = 'none';
+           shows.style.display = 'none';
+        });
+       function f1(e){
+           getting(e);
+           hover.style.display = 'block';
+           hover.style.opacity = '0.3';
+           w = hover.offsetWidth; 
+           h = hover.offsetHeight;                   
+           console.log('----------');
+            // console.log(x+"*****************"+y);            
+            function s(){Zoom(img,hover,l,t,x,y,w,h,show)}
+            time =setTimeout(s,1); 
+       }
+ } 
+ 
+ 
+Zoomhover();
+    function Zoom(imgbox,hoverbox,l,t,x,y,h_w,h_h,showbox){
+    var moveX = x - l - (h_w/2);
+    // console.log('w===',h_w/2,l);       
+    //鼠标区域距离
+    var moveY =y - t - (h_h/2);
+    // console.log('h===',h_h/2,t);
+    //鼠标区域距离 
+    if(moveX < 0){moveX=0}
+    if(moveY < 0){moveY=0}
+    
+    if(moveX > imgbox.offsetWidth - h_w){moveX = imgbox.offsetWidth - h_w}
+    if(moveY > imgbox.offsetHeight - h_h){moveY = imgbox.offsetHeight - h_h}
+    // console.log('hoverbox左上角距图片边框的距离',moveX,moveY);
+    //判断鼠标使其不跑出图片框
+    var zoomX =showbox.offsetWidth/imgbox.offsetWidth;
+    //求图片比例
+    var zoomY =showbox.offsetHeight/imgbox.offsetHeight;
+    // console.log('zoom===',zoomX,zoomY);    
+    showbox.style.cssText = 'left:'  + (-moveX*zoomX) + 'px;' + 'top:' + (-moveY*zoomY) + 'px;';
+    hoverbox.style.cssText = 'left:'+ moveX + 'px;'+ 'top:' + moveY + 'px;';
+    //确定位置
+}
+    </script>
+</body>
+
+</html>

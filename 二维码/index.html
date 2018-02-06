@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="author" content="李光辉">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <title>二维码</title>
+    <style>
+        #main{
+            margin: 80px auto;
+        }
+        h2{
+            text-align: center;
+        }
+        .demo {
+            width: 250px;
+            height: 250px;
+            margin: 0px auto;
+        }
+        .demo p {
+            line-height: 25px
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <h2 class="top_title"><a href="https://github.com/jeromeetienne/jquery-qrcode">使用jquery.qrcode生成二维码</a></h2>
+        <div class="demo">
+            <p>请输入内容然后提交生成二维码：</p>
+            <p><input type="text" id="lgh-content" value="" placeholder="请输入内容"> <input type="button" id="lgh-btn" value="提交"></p>
+            <div id="code"></div>
+        </div>
+    </div>
+    <script src="jquery.qrcode.min.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="李一番">
+        <title>碰壁反弹</title>
+        <style>
+            main{
+                width:700px;
+                height: 500px;
+                border: 1px solid gray;
+                margin: 100px auto;
+                position: relative;
+                background-color: lightcyan;
+            }
+            
+            #child{
+               width: 50px;
+               height: 50px;
+               border-radius: 50%;
+               background: red;
+               position: absolute;
+               /*left: 0; */
+            }
+            
+            #div1{
+               width: 150px;
+               height: 300px;
+               background: deepskyblue;
+               position: relative;
+               top: 200px;
+               left: 200px;
+            }
+                        
+        </style>
+    </head>
+    <body>
+        <main>
+            <div id="child"></div>
+            <div id="div1"></div>
+        </main>
+        <script type="text/javascript">           
+        	
+        	//页面加载时所执行的函数
+        	window.onload = function(){
+
+            //首先后的这几个标签
+        	var main = document.querySelector("main")
+        	var child = document.getElementById("child")
+        	var div1 = document.getElementById("div1")
+
+        	
+        	//clientWidth是对象可见的宽度，不包滚动条等边线，会随窗口的显示大小改变 clientWidth = padding + content
+        	//offsetWidth 是对象的可见宽度，包滚动条等边线，会随窗口的显示大小改变offsetWidth = padding + content +border
+        	
+//      	console.log(main.clientWidth)//700
+//      	console.log(child.offsetWidth)//50
+//      	console.log(main.clientHeight)//500
+//      	console.log(child.offsetHeight)//50
+        	var maxLeft = main.clientWidth - child.offsetWidth;//650
+        	var maxTop = main.clientHeight - child.offsetHeight;//450
+        	//定义变量 即球的left和top值
+        	var startX = 0
+        	var startY = 0
+        	//设置运动div开始位置
+        	
+        	//x代表球横向的运动速度
+        	//y代表球竖向的运动速度
+        	var x = 1
+        	var y = 1
+        	
+        	
+        	
+        	//设置运动div的运动方向
+//      	console.log(div1.offsetLeft)//200
+//      	console.log(child.offsetWidth)//50      
+//      	console.log(div1.offsetWidth)//150
+// left、right、top、bottom四个值为小球贴着障碍物时距离main标签的left、right、top、bottom的值
+        	var left = div1.offsetLeft - child.offsetWidth//150
+        	
+        	var right = div1.offsetLeft + div1.offsetWidth//350px
+        	
+        	var top = div1.offsetTop - child.offsetHeight//150
+        	
+        	var bottom = maxTop
+        	        	
+        	
+        	//获取随机运动div控制bg颜色
+        	function random(min, range){
+        		//Math.random()获取0~1之间的值
+        		//range指的是范围        		
+        		return Math.floor(Math.random() * range + min)
+        	}
+        	  
+        	  //创建一个函数
+        	function bg(){
+        		
+        		//random()函数将生成伪随机数。
+        		//在百度上面搜伪随机数即可了解
+        		//random(a,b)
+        		//a指的是随机数的最小值
+        		//b指的是随机数的最大值
+        		//获得的随机数包含a
+        		var a = random(0, 255)        		
+        		var b = random(0, 255)
+        		var c = random(0, 255)
+        		//rgba(a,b,c,m)
+        		//a指的红色red 取值范围0~255
+        		//b指的是绿色green 取值范围0~255
+        		//c指的是蓝色blue 取值范围0~255
+        		//m指的是模糊度 取值范围0~1
+        		child.style.background = "rgba(" + a + "," + b + "," + c + ",0.8)"
+        	}
+        	
+            
+            
+        	
+        	var timer = setInterval(function(){
+        		
+        		
+        		// /-----定义的球在main标签里面的范围----/
+        		
+        		//边线=即运动球的运动范围
+        		//||是或者的意思
+        		//满足一个条件就可以进行执行
+        		if(startX > maxLeft || startX < 0){
+        			//左右边界线
+        			//*=的应用
+        			//a *= b可写为 a = a * b        			
+        			x *= -1
+        			bg()
+        		}
+        		
+        		if (startY > maxTop || startY < 0){
+        			//上下边界线
+        			y *= -1
+        			bg()
+        		}
+        		
+        		///-------------定义的是碰到div1时的事件-----------/
+        		
+        		//障碍物div1
+        		
+        		//碰到div1的左边界
+        		
+        		//&&是“和”的意思
+        		//几个条件必须同时具备才可以
+				// 小球碰到障碍物左边线，水平反弹
+        		if(startX == left && startY > top){
+        			x *= -1
+        			bg()
+        		}
+        		
+        		//小球碰到div1上边界，竖直反弹
+        		if (startY == top && startX > left && startX < right){
+        			y *=-1
+        			bg()
+        		}
+        		
+        		//小球碰到div1的右边界 水平反弹
+        		if(startX == right && startY > top){
+        			x *= -1
+        			bg()
+        		}
+        		 
+        		 if(startX == 150  &&   startY == 150){
+     		 	// x *= -1
+        		 	y *= -1
+        		 	bg()
+        		 }
+        		        		        		
+        		
+                startX += x * 5//横向速度
+                startY += y * 5//竖向速度
+                
+                // 运动公式
+                child.style.left = startX + 'px'
+                child.style.top = startY + 'px'
+        	},30)       	        	
+        	}
+        </script>
+    </body>
+</html>

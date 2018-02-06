@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>万年历</title>
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+		<!--调用--><!--自己重新排版时，将下面div.style注释-->
+		<div class="calendar">
+		</div>
+	</body>
+	<script type="text/javascript">
+//调用的时候只需在标签中加一个class名为calendar的类名就行,如（class="calendar"）
+	    var div=document.querySelector('.calendar')
+	    div.style='background-color:red; text-align:center; display:inline-block; color:black';	    
+//-------- ------------添加表格----------------------
+	    var tables=document.createElement('table') 
+	    div.appendChild(tables)
+	    for (var i = 0; i < 7; i++) {
+	    	var tr=tables.insertRow() //插入行
+	    	for (var j = 0; j < 7; j++) {
+	    		var td=tr.insertCell()//插入列
+	    		td.style='width:30px; height:30px; border-radius:50%'
+	    	}
+	    }
+//---------------------显示年月日-----------
+	    var times=document.querySelector('#time')
+	    var captions=document.createElement('caption');//显示当前日期的标签
+		var bb=document.createElement('b') //显示当前时间，放在captions里面,加粗
+		var ii=document.createElement('i')//显示年月日周
+		var pre=document.createElement('button')  //上一个月按钮
+		var next=document.createElement('button')//下一个月按钮
+		pre.innerHTML='<';
+		next.innerHTML='>';
+		bb.style="font-size:30px;"
+		captions.appendChild(bb)   //添加
+		captions.appendChild(pre)
+		captions.appendChild(ii)
+		captions.appendChild(next)
+		tables.appendChild(captions)
+		pre.style='background:transparent; border:0; float:left; color:aqua'
+		next.style='background:transparent; border:0; float:right; color:aqua'
+		function make(dates){   
+			var now=new Date(dates)  ////当dates里面的数据改变时，now也会改变
+			var week=now.getDay();   //星期
+		    ii.innerHTML=now.getFullYear()+'年'+(now.getMonth()+1)+'月'+now.getDate()+'日'+' '+'周'+w[week]
+		}
+		function showtime(){
+			var now3=new Date()
+            // console.log(now3);
+			var h=now3.getHours();    //时
+            // console.log(h);
+            var time=now3.toLocaleTimeString().split(':')  //显示格式 (下午7：25：42),在'：'处分割，返回数组，长度为3
+            // console.log(time)
+            time[0]=h<10?'0'+h:h;       //改成24小时格式，将‘下午7’改成h
+            bb.innerHTML=time.join(':')+'<br>'	//用'：'连接,形成字符串，显示19：25：42
+		}
+//--------------------切换年月-----------------		
+		var now1=new Date()//获取当前日期
+		//上一个月
+		pre.onclick=function(){		
+			now1.setMonth(now1.getMonth()-1)  //月份减一，重新设置now1里面的时间
+			make(now1)//重新显示年月日
+			show(now1)	//重新显示日期面板
+		}
+		//下一个月
+		next.onclick=function(){
+			now1.setMonth(now1.getMonth()+1) //月份加一，重新设置now1里面的时间
+			make(now1)
+			show(now1)	
+		}
+//------------------日历面板---------------
+		var tds=document.querySelectorAll('td')
+		//表头
+		var w=['日','一','二','三','四','五','六']
+		for (var i = 0; i < 7; i++) {
+			tds[i].innerHTML=w[i]//表头
+		}
+		//显示天
+		function show(ri) {
+			var now2=new Date(ri)
+			now2.setDate(1)//改变当前日，为1号
+		    var week=now2.getDay()//获取周几
+            console.log(now2+'\n'+now2.setDate(1));
+            console.log(week);
+            console.log(now2.getDate()) ;
+			week=week==0?7:week   
+			var yi=now2.getDate()-week//第一格显示内容
+			now2.setDate(yi)//改变当前日，
+            console.log(now2.getDate(yi),yi) ;
+			for (var i = 7; i < tds.length; i++) {
+                console.log(tds.length);
+            	    tds[i].innerHTML=now2.getDate()//添加日期
+            	    if(now2.getMonth()==now1.getMonth()){
+            	    	tds[i].style.color='white'//如果当前月与span里面显示一致，则是本月，设置字体颜色为白色
+            	    	if(now2.getDate()==(new Date()).getDate()){//如果当前日与当天一样，背景标记为绿色
+            	    	    tds[i].style.backgroundColor='green'
+            	        }
+            	        else{tds[i].style.backgroundColor=''}//清除上一次标记的背景颜色
+            	    }
+            	    else{
+            	    	tds[i].style.color='grey'//不是为灰色
+            	    	tds[i].style.backgroundColor='';//清除上一次标记的背景颜色
+            	    }
+            	    now2.setDate(now2.getDate()+1)//日期加一天，改变now2里面的值，使它显示下一天
+            	}
+		}
+	    make(new Date())//显示当天年月日
+		show(new Date())//显示当天日期
+		setInterval( showtime,1000)//每隔一秒刷新时间
+		showtime()//初始化时间
+	</script>
+	
+</html>

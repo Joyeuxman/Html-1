@@ -1,0 +1,263 @@
+<!--<!DOCTYPE html>-->
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="author" content="李光辉">
+        <title>播放器</title>
+        <!--<link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">-->
+        <style>
+             @font-face {
+                font-family: "Glyphicons Halflings";
+                src: url("fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), 
+                url("fonts/glyphicons-halflings-regular.woff2") format("woff2"), 
+                url("fonts/glyphicons-halflings-regular.woff") format("woff"), 
+                url("fonts/glyphicons-halflings-regular.ttf") format("truetype"), 
+                url("fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg");
+            }
+            .glyphicon {
+                position: relative;
+                top: 1px;
+                display: inline-block;
+                font-family: "Glyphicons Halflings";
+                font-style: normal;
+                font-weight: 400;
+                line-height: 1;
+                -moz-osx-font-smoothing: grayscale;
+            }
+            .glyphicon-backward:before {
+                content:"\e071"
+            }
+            .glyphicon-play:before {
+                content:"\e072"
+            }
+            .glyphicon-pause:before {
+                content:"\e073"
+            }
+            .glyphicon-stop:before {
+                content:"\e074"
+            }
+            .glyphicon-forward:before {
+                content:"\e075"
+            }
+            .glyphicon-volume-off:before {
+                content:"\e036"
+            }
+            .glyphicon-volume-down:before {
+                content:"\e037"
+            }
+            .glyphicon-volume-up:before {
+                content:"\e038"
+            }
+            body,html{
+                /*height: 100vh;*/
+                background-color: #333333;
+            }
+            main{
+                margin: 100px auto;
+                width: 300px;
+                height: 300px;
+                border-radius: 15px;
+                background-image: url(wf.png);
+                background-repeat: no-repeat;
+                background-size: 300px;
+                box-shadow: 2px 4px 8px black;
+                opacity: 0.95;
+            }
+            header{
+                text-align: center;
+                height: 96px;
+                background-color: #211F1D;
+                opacity: 0.95;
+                color: #A59C92;
+                box-sizing: border-box;
+                border-top-left-radius: 15px;
+                border-top-right-radius: 15px;
+            }
+            h1{
+                margin: 0;
+                font-size: 35px;
+                padding-top: 15px;
+            }
+            h4{
+                margin: 0;
+            }
+            progress{
+                box-sizing: border-box;
+                height: 4px;
+                width: 300px;
+                border: none;
+                /*position: relative;
+                top: -12px;*/
+                /*color: orange;
+                background-color: black;
+                box-sizing: border-box;*/
+            }
+            footer{
+                height: 200px;
+                background-color: #6F2B32;
+                opacity: 0.95;
+                box-sizing: border-box;
+                border-bottom-left-radius: 10px;
+                border-bottom-right-radius: 10px;
+            }
+            time{
+                text-align: center;
+                font-size: 28px;
+                color: #A59C92;
+                display: block;
+                padding: 24px;
+                font-weight: 100;
+                font-family: '华文黑体';   
+            }
+            section{
+                text-align: center;
+                color: #A59C92;
+                /*font-weight: normal;*/
+            }
+            section span:hover{
+                color:white;
+                text-shadow: 0 0  20px #A59C92;
+            }
+            section span:nth-child(1){
+                font-size: 32px;
+                position: relative;
+                top: -13px;
+                left: -25px;
+            }
+            section span:nth-child(2){
+                font-size: 60px;
+                line-height: 60px;
+            }
+            section span:nth-child(3){
+                font-size: 30px;
+                position: relative;
+                top: -13px;
+                left: 20px;
+            }
+            aside{
+                text-align: center;
+                color: #A59C92;
+                padding-top: 32px;
+            }
+            aside progress{
+                width: 100px;
+                height: 2px;
+                position: relative;
+                top: -6px;
+                left: -2px;
+            }
+            
+            aside span:hover{
+                color: white;
+                text-shadow: 0px 0px 10px rgb(175,165,155);
+            }
+        </style>
+    </head>
+    <body>
+        <audio></audio>
+        <main>
+            <header>
+                <h1>传奇</h1>
+                <h4>王菲</h4>
+            </header>
+            <progress value="0"></progress>
+            <footer>
+                <time>0:00</time>
+                <section>
+                    <span class="glyphicon glyphicon-backward" onclick="prev();"></span>
+                    <span class="glyphicon glyphicon-pause" onclick="playPause();"></span>
+                    <span class="glyphicon glyphicon-forward" onclick="next();"></span>
+                </section>
+                <aside>
+                    <span class="glyphicon glyphicon-volume-down" onclick="volumeDown();"></span>
+                    <progress value="0.5"></progress>
+                    <span class="glyphicon glyphicon-volume-up" onclick="volumeUp();"></span>
+                </aside>
+            </footer>
+        </main>
+        <script>
+            var h1 = document.getElementsByTagName('h1')[0];
+            var h4 = document.querySelector('h4');
+            var player = document.getElementsByTagName('audio')[0];
+            var main = document.getElementsByTagName('main')[0];
+            var progress = document.getElementsByTagName('progress')[0];
+            var time = document.getElementsByTagName('time')[0];
+            var volume = document.getElementsByTagName('progress')[1];
+            console.log(h1,h4,player,main,progress,time,volume)
+            var playList = [
+                {name: '传奇', singer: '王菲', src: '传奇.mp3', pic: 'wf.png' },
+                {name: '知道不知道', singer: '刘若英', src: '知道不知道.mp3', pic: 'lry.jpg' }
+                           ];
+            var current = 0;
+            player.volume = 0.5;
+            function updateTime(){
+                progress.value = player.currentTime / player.duration;
+                var seconds = Math.ceil(player.currentTime % 60 );
+                var minutes = Math.floor(player.currentTime / 60) ;
+                if(seconds < 10) seconds = '0' +seconds;
+                time.innerHTML = minutes + ':' + seconds;
+            }
+            function updateVolume(){
+                volume.value = player.volume;
+                console.log(volume.value);
+            }
+            // 页面刚打开时或者刷新时，音乐自动从第一首开始播放
+            function start(){
+                if(current >= playList.length) current = 0;
+                if(current < 0) current = playList.length - 1;
+                var item = playList[current];
+                if(item){
+                    play(item)
+                }
+            }
+            start();
+            // 控制音乐的播放与暂停
+            function play(item){
+                h1.innerHTML = item.name;
+                h4.innerHTML = item.singer;
+                player.src = item.src;
+                main.style.backgroundImage = 'url(' + item.pic +')';
+                main.style.aninateName = 'slideBg';
+                setTimeout(function(){main.style.animateName = ''},2000);
+                player.play();
+                
+            }
+            function playPause(){
+                if(player.paused){
+                    player.play();
+                    document.getElementsByClassName('glyphicon-play')[0].className = 'glyphicon glyphicon-pause';
+                }else {
+                    player.pause();
+                    document.getElementsByClassName('glyphicon-pause')[0].className = 'glyphicon glyphicon-play';
+                }
+            }
+            function prev(){
+                current--;
+                start();
+            }
+            function next(){
+                current++;
+                start();
+            }
+            function volumeDown(){
+                if(player.volume > 0){
+                    player.volume -= 0.1;
+                }
+            }
+            function volumeUp(){
+                 if(player.volume < 1 ){
+                    player.volume += 0.1;
+                }
+            }
+            
+            
+            player.addEventListener('ended',next);
+            player.addEventListener('timeupdate',updateTime);
+            player.addEventListener('volumechange',updateVolume);
+        </script>
+        <!--<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>-->
+        <!--<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
+    </body>
+</html>

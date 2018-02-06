@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>日历修改精简版</title>
+        <style>
+            body{
+                -moz-user-select: none;
+            }
+            table{
+                box-sizing: border-box;
+            }
+            caption,tr,th,td{
+                display:inline-block;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = now.getMonth();
+            var ri = now.getDate();
+            var day = now.getDay();//星期几
+            var firstday;
+            var first=new Date(year,month,1);//当月第一天Date信息
+            firstday=first.getDay();           
+            function is_leap(year) { return (year%100==0?res=(year%400==0?1:0):res=(year%4==0?1:0)); }
+            var m_days=new Array(31,28+is_leap(year),31,30,31,30,31,31,30,31,30,31);//各月份的总天数
+            document.body.style.cssText ="margin:0;background:#000;"
+            var tab = document.createElement('table');
+            tab.style.cssText ="width:560px;height:430px;background-color:#2a5;" + 
+            "margin:100px auto;border:10px solid #eee; border-bottom:20px solid #eee;box-sizing:border-box;"
+            document.body.appendChild(tab);            
+            var cap = document.createElement('caption');
+            cap.style.cssText ="width:540px;height:80px;position:relative;"
+            tab.appendChild(cap);            
+            var h2 = document.createElement('h2');
+            h2.style.cssText ="width:240px;text-align:left;text-indent:1.5rem;font-size:2rem;color:#fff;font-weight:normal;"
+            var months = month + 1; 
+            h2.innerText =year + '年' + months +'月';
+            cap.appendChild(h2);            
+            var spans1 = document.createElement('span');
+            spans1.addEventListener('click',jian);
+            spans1.style.cssText ="position:absolute;right:100px;top:23px;font-size:2rem;color:#fff;cursor:default;" 
+            spans1.innerText= "<";
+            cap.appendChild(spans1);            
+            var spans2 = document.createElement('span');
+            spans2.addEventListener('click',add);
+            spans2.style.cssText ="position:absolute;right:40px;top:23px;font-size:2rem;color:#fff;cursor:default;" 
+            spans2.innerText= ">"
+            cap.appendChild(spans2);          
+            var tr = tab.insertRow();
+            var arrday = ['日','一','二','三','四','五','六']; // 创建星期 th
+            for(i = 0;i <7;i++){
+               var th = tr.insertCell();
+               th[i] = arrday[i];
+               th.innerText =th[i];
+               th.style.cssText ="height:50px;width:75px;text-align:center;line-height:50px;color:#fff;" 
+             }   //创建td     
+               for(var i = 0;i < 6;i++){
+                   var tr = tab.insertRow();
+                   tr.style.cssText = "width:540px;height:50px;"  
+                for(var j =0;j < 7;j++){
+                    var td = tr.insertCell();
+                    td.style.cssText ="height:50px;width:75px;text-align:center;line-height:50px;color:#fff;"
+                    td.className = 'a';
+              }// 内for结束
+         }//外for结束
+            var tds = document.getElementsByClassName('a');                        
+            var date_str; // 显示日期 
+               function show(){ console.log(tds); 
+                    for(var idx = 0;idx < 42;idx++){
+                        tds[idx].style.color ="#fff";
+                        tds[idx].style.background = ""; // console.log(firstday);
+                        var mfirstday = firstday != 0? firstday:7;//console.log('mfirstday0或7===='+ mfirstday);
+                        date_str=idx-mfirstday+1 //计算日期 0~41个单元格里的数字 console.log(date_str);
+                        if(date_str==ri){
+                            tds[idx].style.background = "#fda";
+                            tds[idx].style.borderRadius = "50%";
+                        }                    
+                        if (year == now.getFullYear() && month == now.getMonth() && date_str == now.getDate()){
+                        tds[idx].style.background = "#0f0";
+                        tds[idx].style.borderRadius = "50%";
+                        }
+                    if(date_str <= 0){
+                                if(month-1 == -1){
+                                date_str =31 + idx - mfirstday + 1;//console.log('date_str第前一年月31天=====' +  date_str);
+                                tds[idx].innerText = date_str;
+                                tds[idx].style.color = "#000";
+                           }else if(month -1 == 1){
+                                var leap = m_days[month - 1]==28?  28:29;
+                                date_str = leap + idx - mfirstday + 1;
+                                console.log('date_str二月=====' +  date_str)
+                                tds[idx].innerText = date_str;
+                                tds[idx].style.color = "#000";}
+                           else{ switch(m_days[month-1]){
+                           case 30: date_str = 30 + idx - mfirstday + 1;
+                                tds[idx].innerText = date_str;
+                                tds[idx].style.color = "#000"; break;//console.log('date_str30天=====' +  date_str)      
+                           case 31: date_str =31 + idx - mfirstday + 1;//console.log('date_str31天=====' +  date_str);
+                                tds[idx].innerText = date_str
+                                tds[idx].style.color = "#000"; break;
+                           default : break;                           
+                          }                           
+                       }      
+                  }   //大if结束  
+                   else if(0 < date_str && date_str <= m_days[month]){   
+                             date_str =idx - mfirstday + 1; //console.log('date_str31天=====' +  date_str);
+                             tds[idx].innerText = date_str; }    
+                   else{ date_str=(date_str % m_days[month]);
+                        tds[idx].innerText = date_str;
+                        tds[idx].style.color = "#000";                        
+                     }//else结束  
+                   } //for结束                         
+               } //show结束 //show结束
+            show();                                      
+            function jian(){
+                month--;
+                months--;
+                if(months==0){ year--;months = 12;month = 11;}
+                h2.innerText = year + '年' + months +'月';
+                first=new Date(year,month,1);//当年当月第一天Date资讯 console.log('2015年first====' + first)
+                firstday=first.getDay();    //console.log('2015年firstday====' + firstday)
+                is_leap(year) == 1? m_days[1]=29:m_days[1]=28;//console.log('isleap===' + m_days[1]); 
+                show();
+            }
+            function add(){ month++;months++;                              
+                if(months > 12){year++;month = 0;months = 1;}
+                h2.innerText = year + '年' + months +'月';
+                first=new Date(year,month,1);//当年当月第一天Date资讯
+                firstday=first.getDay();
+                is_leap(year) == 1? m_days[1]=29:m_days[1]=28;//console.log('isleap===' + m_days[1]); 
+                show();
+            }
+        </script>
+    </body>
+</html>

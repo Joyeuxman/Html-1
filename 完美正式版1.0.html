@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+   <script>
+   var  calendar =document.createElement('div');
+        document.body.appendChild(calendar);
+        calendar.style.width="500px";
+        calendar.style.height="300px";
+        // calendar.style.border="1px solid blue";
+        calendar.style.margin="100px auto";
+        calendar.style.backgroundColor='#008000';
+        calendar.style.boxShadow='-10px -10px 10px green';
+   var header = document.createElement('div');
+        calendar.appendChild(header);
+        header.style.width='100%';
+        header.style.height='20%';
+        header.style.borderBottom='1px solid black';
+        header.style.fontSize='50px';
+   var shijian =document.createElement('span');
+   var daiding =document.createElement('span');
+        header.appendChild(shijian);
+        header.appendChild(daiding);
+        shijian.style.marginLeft='20px';
+        daiding.style.margin='12px 20px';
+        daiding.style.fontSize='20px';
+        daiding.style.float='right';
+   var table  = document.createElement('table');
+        calendar.appendChild(table);
+        // table.style.border='1px solid red';
+        table.style.width="100%";
+        table.style.height="70%";
+        table.style.borderCollapse='collapse';
+        table.style.boxShadow='10px 10px 5px black'; 
+   var caption = document.createElement('caption');
+        table.appendChild(caption);
+        var year = document.createElement('span');
+        var spande = document.createElement('span');
+        var spanad = document.createElement('span');    
+        var span4 = document.createElement('span');
+        var month = document.createElement('span');
+        var span6 = document.createElement('span');    
+            caption.appendChild(year);
+            caption.appendChild(span4);
+            caption.appendChild(month);
+            caption.appendChild(span6);
+            caption.appendChild(spanad);
+            caption.appendChild(spande);
+            // year.innerHTML='2016';
+            span4.innerHTML='年';
+            span6.innerHTML='月';
+            spande.innerHTML='<';
+            spanad.innerHTML='>';
+            caption.style.textAlign='left';
+            caption.style.fontSize='20px';
+            caption.style.fontWeight='900';
+            spanad.style.marginRight='20px';
+            spanad.style.marginLeft='20px';
+            spanad.style.float='right';
+            spande.style.float='right';
+            year.style.marginLeft='20px';
+      for(i=0;i<7;i++){
+        var tr7 = document.createElement('tr'); 
+        table.appendChild(tr7);
+    }
+      var tr7 = document.getElementsByTagName('tr');
+          for(i=0;i<7;i++){
+          var th = document.createElement('th');
+             th.style.border='1px solid black';
+             tr7[0].appendChild(th);
+          for(j=0;j<6;j++){
+          var tr6td=document.createElement('td');
+               tr6td.style.border="1px solid black"
+               tr6td.style.Padding='0px';
+               tr6td.style.lineHeight='0';
+               tr6td.style.textAlign='center';
+          var c =j+1;
+          tr7[c].appendChild(tr6td);
+  }   
+}   
+         var tds =  document.getElementsByTagName('td');
+         var week =['星期一','星期二','星期三','星期四','星期五','星期六','星期日']
+         var ths =document.getElementsByTagName('th');
+            for(i=0;i<7;i++){
+                ths[i].innerHTML=week[i];
+                ths[i].style.height='30px';
+    }     
+    spande.setAttribute('onclick','decrese()');
+    spande.addEventListener('onmousedown',boxdown());
+    spanad.setAttribute('onclick','add()');
+    spanad.addEventListener('onmouseup',boxup())
+    var body = document.getElementsByTagName('body')[0];
+    //////////////////////////////////
+    var date = new Date();
+    var yearp = date.getFullYear();
+    var monthget=date.getMonth();
+    var day= date.getDay();
+    var getdate =date.getDate();
+    var datee = new Date(2016,monthget,1);
+    var dayy  = datee.getDay();
+    var gaga  = dayy+getdate-2;
+    console.log(getdate);
+    ////////////////////////////////
+    var h = date.getHours();
+    var m = date.getMinutes();
+    var s = date.getSeconds();
+    year.innerHTML=yearp; 
+    month.innerHTML=monthget+1;
+    // var ff = month.textContent()
+     console.log(month.innerHTML);
+    //////时间显示//////////
+    function time(){
+         daiding.innerHTML='吉凶由你定'
+         var date = new Date();
+         var yearp = date.getFullYear();
+         var h = date.getHours();
+         var m = date.getMinutes();
+         var s = date.getSeconds()
+         h = checkTime(h);
+         m = checkTime(m);
+         s = checkTime(s);
+         shijian.innerHTML=h+':'+m+':'+s;
+         t=setTimeout(function(){time()},500);
+                   }
+   function checkTime(i){if(i<10){i='0'+i;}return i;}
+   ////////////////     
+        function setss(){}
+        function showyear(){}
+        function boxdown(){}
+        function boxup(){}
+   //减月份/////////////      
+   function decrese(){
+            // spande.style.color='red';
+            if(monthget>=1){
+            monthget=monthget-1;
+            month.innerHTML=monthget+1;
+            var datee = new Date(yearp,monthget,1);
+            var g2 = datee.getDay();
+            hahaha(yearp,monthget,g2);
+            nene();
+            // if
+    }
+            else{
+                monthget=11;
+                month.innerHTML=monthget+1;
+                yearp=yearp-1;
+                year.innerHTML=yearp;
+                var datee = new Date(yearp,11,1);
+                var g2 = datee.getDay();
+                hahaha(yearp,11,g2);
+                nene();
+        } 
+        }
+    //加月份/////////////////////////////////////////////////   
+    function add(){
+            if(monthget<=10){
+            monthget=monthget+1;
+            month.innerHTML=monthget+1;
+            var datee = new Date(yearp,monthget,1);
+            var g2 = datee.getDay();
+            hahaha(yearp,monthget,g2);
+            nene();
+    }
+            else{
+                monthget=0;
+                month.innerHTML=monthget+1;
+                yearp=yearp+1;
+                year.innerHTML=yearp;
+                var datee = new Date(yearp,11,1);
+                var g2 = datee.getDay();
+                hahaha(yearp,11,g2);
+                nene();
+        } 
+        }
+    //四种月份数组////////////////////////////////////////////////////
+   var marks = [[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28],
+                [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29],
+                [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
+                [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
+               ]
+   //天数判断函数/////////////////////
+   function hahaha(x,y,z){
+         if(z==0||z==1||z==2){z=z+7;}
+         y=y+1;
+         hahahaha(x,y,z);  
+         if(y==1||y==3||y==5||y==7||y==8||y==10||y==12)
+         {
+             var aaa=42-(31+z-1);
+             for(i=0;i<aaa;i++){var b=31+z-1+i;   
+                                tds[b].innerHTML=marks[0][i];
+                                tds[b].style.backgroundColor='#015C01';
+                               }
+        for(i=0;i<31;i++){tds[z-1+i].innerHTML=marks[3][i];tds[z-1+i].style.backgroundColor='#008000';}
+        // tds[gaga].style.backgroundColor='blue';
+}
+         else if(y==4||y==6||y==9||y==11)
+         {      
+             var ab=42-(30+z-1);
+             
+             for(i=0;i<ab;i++){var ac=30+z-1+i;tds[ac].innerHTML=marks[0][i];
+                 tds[ac].style.backgroundColor='#015C01';
+                }
+         for(i=0;i<30;i++){tds[z-1+i].innerHTML=marks[2][i];tds[z-1+i].style.backgroundColor='#008000';}
+        //  tds[gaga].style.backgroundColor='blue';
+    }
+          else
+          {
+              if(x%4==0&&x%100!==0||x%400)
+              {
+                  
+                  var ad=42-(29+z-1);
+                  for(i=0;i<ad;i++){var ae=29+z-1+i;tds[ae].innerHTML=marks[0][i];
+                      tds[ae].style.backgroundColor='#015C01';
+                }
+              for(i=0;i<29;i++){tds[z-1+i].innerHTML=marks[1][i];tds[z-1+i].style.backgroundColor='#008000';}
+            //   tds[gaga].style.backgroundColor='blue';
+        }
+                  else
+                  {
+                      var af=42-(28+z-1);
+                      for(i=0;i<af;i++){var ag=28+z-1+i;tds[ag].innerHTML=marks[0][i];
+                           tds[ag].style.backgroundColor='#015C01';
+                        }
+                    for(i=0;i<29;i++){tds[z-1+i].innerHTML=marks[0][i];tds[z-1+i].style.backgroundColor='#008000';}
+                    // tds[gaga].style.backgroundColor='blue';
+            }
+
+                }
+            } 
+   //////////////////////
+   function sets(){
+       
+       hahaha(yearp,monthget,dayy);
+       tds[gaga].style.backgroundColor='blue';
+       time();
+    } 
+   //////////////////////
+   function nene(){
+       var datem = new Date();
+       var yearm = date.getFullYear();
+       var monthm = date.getMonth();
+       if(year.innerHTML==yearm){
+               if(month.innerHTML==monthm+1){
+                    tds[gaga].style.backgroundColor='blue';
+              }
+              else{
+                  tds[gaga].style.backgroundColor='green';
+              }
+   }
+   }
+   function hahahaha(x,y,z){
+         
+         if (y==1||y==2||y==4||y==6||y==8||y==9||y==11){
+             for(i=32;i>=34-z;i--){
+                 tds[z-2-32+i].innerHTML=marks[3][i-2];
+                 tds[z-2-32+i].style.backgroundColor='#015C01';
+            }
+         }               
+         else if(y==5||y==7||y==10||y==12){
+            //  console.log(z);
+             for(i=32;i>=34-z;i--){
+                 tds[z-2-32+i].innerHTML=marks[2][i-3];     
+                 tds[z-2-32+i].style.backgroundColor='#015C01';
+        }
+         }
+         else {
+             if(x%4==0&&x%100!==0||x%400){
+                 for(i=32;i>=34-z;i--){
+                 tds[z-2-32+i].innerHTML=marks[1][i-4]; 
+                 tds[z-2-32+i].style.backgroundColor='#015C01';
+            }
+             }
+             else{
+                 for(i=32;i>=34-z;i--){
+                 tds[z-2-32+i].innerHTML=marks[0][i-5];
+                 tds[z-2-32+i].style.backgroundColor='#015C01';
+            }
+         } 
+   }
+}
+   body.setAttribute('onload',sets());
+//    add();
+//    decrese();
+   </script>
+</body>
+</html>

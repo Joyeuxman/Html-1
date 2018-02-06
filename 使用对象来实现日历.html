@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="author" content="李光辉">
+		<title>日历</title>
+		<style>
+			
+		</style>
+	</head>
+	<body>
+		
+		<script>
+			
+//			定义一个构造函数
+			function Calender(){
+				// div表示红色背景
+                var div;
+                // this 指小写的对象calender
+                this.currentMonth =new Date();
+                // setDate()将当前月份的日期显示为1号
+                this.currentMonth.setDate(1);
+                // console.log(this);
+                // console.log (this.currentMonth);
+                // var p ={};
+                // p.name = 'zhangsan';
+                // p.show =function(){}
+                // p.show()
+                // this.getFirstDate是获取当前展示月份的1号
+                this.getFirstDate = function(){
+                    // week代表当月1号对应周几
+                    var week = this.currentMonth.getDay();
+                    console.log(week);
+                    if(week ==0) week =7;
+                    week = week - 2;
+                    // 用this.currentMonth初始化变量firstDate
+                    // firstDate 2016.8.1
+                    var firstDate =new Date(this.currentMonth);
+                    console.log(firstDate);
+                    firstDate.setDate(-week);
+                    console.log(firstDate);
+                    return firstDate;
+                }
+				
+				//展示日历的主体部分
+				this.showCalenderMain = function(){
+					div = document.createElement('div');
+                    div.style.width = '450px';
+                    div.style.minHeight = '100px';
+                    div.style.backgroundColor = 'red';
+                    document.body.appendChild(div);
+				}
+				
+//				展示日历的表头部分
+				this.showHeader = function(){
+					var table = document.createElement('table');
+                    table.style.width = '100%';
+                    // 向表格里插入一行
+                    var tr = table.insertRow();
+                    function getWeekName(week){
+                        switch(week){
+                            case 1:
+                            return '一';
+                            case 2:
+                            return '二';
+                            case 3:
+                            return '三';
+                            case 4:
+                            return '四';
+                            case 5:
+                            return '五';
+                            case 6:
+                            return '六';
+                            case 7:
+                            return '日';
+                        }
+                    }
+                    for(var i =1;i <=7;i++){
+                        var td = tr.insertCell();
+                        td.style.textAlign = 'center';
+                        td.style.color = 'white';
+                        td.innerHTML = getWeekName(i);
+                        // 
+                    }
+                    div.appendChild(table);
+				}
+				
+//				展示日历的主体部分
+				this.showBody = function(){
+					// 首先得到当月1号对应的毫秒
+                    
+                    var firstDate = this.getFirstDate().getTime();
+                    
+                    // 
+                    console.log( firstDate);
+                    
+                    // 
+                    var table = document.createElement('table');
+                    table.style.width = '100%';
+                    for(var i = 0;i <6;i++){
+                        var tr = table.insertRow();
+                        for(var j = 0;j < 7;j++){
+                            var td =tr.insertCell();
+                            td.style.textAlign = 'center';
+                            td.style.color = 'white';
+                            td.style.height = '2rem';
+                            
+                            // 第一次循环 n = 0 1 2 3 4 5 6
+                            // 第一次循环 n = 7 8 9 10 11 12 13
+                            // n ：0~41
+                            // cellDate代表每个单元格对应的毫秒
+                            var n = i * 7 + j;
+                            var cellDate = new Date(firstDate + n * 24 * 60 * 60 * 1000);
+                            // // 
+                            // console.log(cellDate);
+                            // 用cellDate.getDate()得到日期
+                            td.innerHTML = cellDate.getDate();
+                            // console.log(td.innerHTML);
+                            // 
+                            // 不属于当前月份的日期改变文本颜色
+                            if(cellDate.getMonth() != this.currentMonth.getMonth()){
+                                td.style.color = 'gray';
+                            }
+                        }
+                    }
+                    div.appendChild(table);
+				}
+			    // 显示2016年X月
+				this.showToolbar = function(){
+					var toolbar = document.createElement('div');
+                    toolbar.style.fontSize = '1.5rem';
+                   toolbar.style.color = 'white';
+                   toolbar.style.padding = '20px';
+                   console.log(this.currentMonth);  //当前月份的1号
+                //    this.currentMonth相当于  数字时钟  里的now变量
+                   toolbar.innerHTML = this.currentMonth.getFullYear() + '年' + (this.currentMonth.getMonth()+1) +'月' ;
+                   div.appendChild(toolbar);
+                //    后一个月
+                var next = document.createElement('span');
+                next.style.float = 'right';
+                next.innerHTML = '&nbsp;&nbsp;&gt;';
+                toolbar.appendChild(next);
+                // 函数外部的this是指对象calender
+                console.log(this);
+                console.log(this.currentMonth);
+                console.log('***'.repeat(20));
+                next.onclick = function(){
+                    // 这个函数内部的this是指next
+                    console.log(this);
+                    console.log(calender.currentMonth);
+                    var month = calender.currentMonth.getMonth();
+                    console.log(month);
+                    month++;//
+                    calender.currentMonth.setMonth(month);
+                    console.log(calender.currentMonth)
+                    // 清空body的内容  重新调用calender.show();
+                    document.body.innerHTML = '';
+                    calender.show();
+                }
+                
+                //    前一个月
+                var prev = document.createElement('span');
+                prev.style.float = 'right';
+                prev.innerHTML = '&lt;&nbsp;&nbsp;';
+                toolbar.appendChild(prev);
+                prev.onclick = function(){
+                    var month = calender.currentMonth.getMonth();
+                    month--;
+                    calender.currentMonth.setMonth(month);
+                    // 清空body的内容  重新调用calender.show();
+                    document.body.innerHTML = '';
+                    calender.show();
+                }
+				}
+			
+				this.show = function(){
+					this.showCalenderMain()
+					this.showToolbar()
+					this.showHeader()
+					this.showBody()
+				}
+			}
+			
+			// 用构造函数去声明一个对象Calender
+			var calender = new Calender()
+            // 用Calender调用构造函数里的show()方法
+		   	calender.show()
+
+		</script>
+	</body>
+</html>
