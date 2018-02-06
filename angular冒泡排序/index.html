@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular冒泡排序</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body ng-app="App">
+    <h1>冒泡排序算法</h1>
+    <div ng-controller="AppController" class="value">
+       <div class="value-line" ng-repeat="i in data" style="width:{{i * 10}}px">
+         {{i}}  
+       </div>
+       <button ng-click="start()">排序</button>
+       <button ng-click="reset()">重置</button>
+       <span style="color:red">{{alertMsg}}</span>
+    </div>
+    <script src="angular.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

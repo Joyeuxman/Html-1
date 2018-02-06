@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>萤火虫</title>
+    <script src="jquery.js"></script>
+    <style>
+        body {
+            /*margin: 0;*/
+            background-color: black;
+        }
+        
+        .blue {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 100%;
+            top: 50%;
+            left: 70%;
+        }
+        
+        .blue.after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 80%;
+            transform: translate(-50%, -50%);
+            height: 20px;
+            width: 20px;
+            border-radius: 100%;
+            background: green;
+            
+            box-shadow: 0 0 20px 10px green;
+            animation: zhuandong 4s infinite ;
+        }
+        
+        .yellow {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            /*2D变换 向左50%，向上50%*/
+            transform: translate(-50%,-50%);
+            border-radius: 100%;
+            top: 50%;
+            left: 40%;
+        }
+        
+        .yellow.after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+            height: 20px;
+            width: 20px;
+            border-radius: 100%;
+            background: yellow;
+            box-shadow: 0 0 14px 4px yellow;
+            /*给元素绑定帧动画，zhuandong帧动画名字*/
+            animation: zhuandong 2s infinite;
+        }
+        
+        .sphere {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 4px;
+            width: 4px;
+            border-radius: 100%;
+            box-shadow: 0 0 10px 4px #00BCD4;
+            
+            animation: zhuan 6s infinite;
+        }
+        
+        @keyframes zhuandong {
+            0% {
+                /*rotate旋转，正值顺时针，负值逆时针*/
+                /*scale缩放 小于1缩小 大于1放大*/
+                transform: rotate(-50%, -50%)scale(1);
+            }
+            50% {
+                transform: rotate(-50%, -50%)scale(1.2);
+            }
+            100% {
+                transform: rotate(-50%, -50%)scale(1);
+            }
+        }
+        
+        @keyframes zhuan {
+            50% {
+                top: 50%;
+                left: 70%;
+                opacity: 1;
+                box-shadow: 0 0 14px 4px deepskyblue;
+                background: deepskyblue;
+            }
+            0% {
+                top: 50%;
+                left: 40%;
+                opacity: 1;
+                transform: scale(1);
+                box-shadow: 0 0 14px 4px yellow;
+                background: yellow;
+            }
+            25% {
+                top: 50%;
+                transform: scale(1.6);
+            }
+            75% {
+                top: 50%;
+                transform: scale(1.6);
+            }
+            100% {
+                top: 50%;
+                left: 40%;
+                box-shadow: 0 0 14px 4px yellow;
+                background: yellow;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="blue"></div>
+    <div class="yellow"></div>
+
+    <script>
+        function SpawnSphere(){
+            var sphere = '<div class="sphere"></div>';
+            //animate()自定义动画
+            //在body上添加div，找到匹配元素的jquery对象
+            $('body').append(sphere).find('.sphere').animate({
+                top:'0px',
+                opacity:0,
+            },8000,function(){
+                $('body').find('.sphere:first').remove();
+            });
+        }
+        setInterval('SpawnSphere()',800);
+    </script>
+</body>
+
+</html>

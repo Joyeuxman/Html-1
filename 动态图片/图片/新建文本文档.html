@@ -1,0 +1,71 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="付阳">
+    <title></title>
+    <style>
+        div{
+            display:none;
+        }
+    </style>
+</head>
+<body>
+     <canvas id="mycanvas" width="300" height="300"></canvas>
+     <canvas id="mycanvas1" width="300" height="300"></canvas>
+    <div >
+        <img src="1.png" id="myImg">
+        <img src="2.png" id="myImg1">
+    </div>
+    <script>
+     var ctx = document.getElementById("mycanvas").getContext("2d");
+     var img = document.getElementById("myImg");
+     var X = 0;
+     var ctx1 = document.getElementById("mycanvas1").getContext("2d");
+     var img1 = document.getElementById("myImg1");
+     var Y = 0;
+    // countNum计数器，控制图片的切换频率。
+    var countNum = 0;
+    function picRun(){
+    // clearRect()是为了清除之前的图层，始终只显示一张图片，否则每次切出的新图会不停叠加。
+        ctx.clearRect(0,0,1100,300);
+        countNum++;
+        if(countNum == 10){
+            X += 171;
+            countNum = 0;
+        }
+        if(X >= 855){
+            X = 0;
+        }
+        // beginPath()开启绘制路径
+        ctx.beginPath();
+        // 得到你想要绘制的图片对象，通过drawImage来绘制。这里drawImage()可以有3个参数，5个参数，9个参数。
+        // 3个参数：1.需要绘制的图片对象 2,3.图片坐标；
+       // 5个参数：1.需要绘制的图片对象 2,3.图片坐标 4,5.图片宽高；
+       // 9个参数：1.需要绘制的图片对象 2,3.绘制图片的横纵向切割点 4.横向切割宽度 5.纵向切割高度 6,7.切割好的图片坐标 8,9.切割好的图片宽高。
+        ctx.drawImage(img,X,0,171,202,100,100,171,202);
+        //closePath()闭合绘制路径
+        ctx.closePath();
+        // stroke()绘制定制图形
+        ctx.stroke();
+    }
+ setInterval(picRun,30);
+    function picRun1(){
+        ctx1.clearRect(0,0,600,300);
+        countNum++;
+        if(countNum == 10){
+            Y += 129;
+            countNum = 0;
+        }
+        if(Y >= 387){
+            Y = 0;
+        }
+        ctx1.beginPath();
+        ctx1.drawImage(img1,Y,0,129,135,100,100,129,135);
+        ctx1.closePath();
+        ctx1.stroke();
+        requestAnimationFrame(picRun1);
+    }
+   setTimeout(picRun1,30);
+        </script>
+</body>
+</html>

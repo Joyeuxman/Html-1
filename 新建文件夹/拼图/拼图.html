@@ -1,0 +1,117 @@
+<html>
+
+<head>
+	<meta charset="UTF-8" name="Taimei">
+	<!--<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />-->
+	<!--<link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">-->
+	<!--<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>-->
+	<!--<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
+	<!--<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>-->
+	<script src="jquery-2.1.0.js"></script>
+	<title></title>
+	<style type="text/css">
+		#puzzle {
+			display: flex;
+			width: 600px;
+			flex-wrap: wrap;
+			margin: 100px auto;
+		}
+		
+		img {
+			width: 200px;
+			border: 1px solid white;
+			box-sizing: border-box;
+			/*font-size: initial;字体大小设置成初始化，浏览器大小*/
+		}
+	</style>
+</head>
+
+<body>
+	<div id="puzzle">
+	</div>
+	<span>0</span>
+	<script type="text/javascript">
+		function init(){
+			var shu =['image/1.jpg','image/2.jpg','image/3.jpg','image/4.jpg','image/5.jpg','image/6.jpg','image/7.jpg','image/8.jpg','image/9.jpg'];
+		    function getRandom(){
+		    	var suiji =Math.floor(Math.random()*9);
+		        if(shu[suiji]!=0){
+		        	$('<img>').attr('src',shu[suiji]).appendTo('#puzzle').val();
+		        	console.log(suiji)
+		        	console.log(shu[suiji])
+		        	shu[suiji]=0
+//		        	console.log(shu)
+		            }else{
+		        	    getRandom()
+		        }
+		    }
+		        for (var i = 0; i < 9; i++) {
+		    	    getRandom()
+		        }
+		    }
+		    init()
+		function play(){
+			var step=0;
+			var puzzle = document.querySelector('#puzzle');
+			var imgs=document.querySelectorAll('img');
+			for (var i = 0; i < imgs.length; i++) {
+			    var img = imgs[i];
+			    img.ondragstart = function(event){   //ondragstart：拖拽开始
+                    event.target.id='dragging';
+				    event.dataTransfer.setData('img','dragging');//dataTransfer：传递数据
+//				    setData('img','dragging')setDate：1：设置名字，2：id名
+				    console.log(event.target)
+			    }
+			    img.ondragover = function(event){    //ondragover：拖拽停留在上面
+			        event.currentTarget.style.opacity=0.5;//currentTarget：当前目标
+			    }
+			    img.ondragleave = function(event){    //ondragleave：拖拽离开	
+			        event.currentTarget.style.opacity=1;	
+			        
+			    }
+			    img.ondragend = function(event){     //ondragend拖拽结束
+			    	var id = event.dataTransfer.getData('img');
+			    	document.getElementById(id).id ='';
+			    }
+			    img.ondrop = function(event){      //ondrop：释放鼠标
+			    	step++; 
+					  
+					                                                                                                                    
+			    	$('span').text(step);
+			        event.preventDefault();//阻止浏览器的默认行为
+			        event.stopImmediatePropagation()//立即停止
+			        var id = event.dataTransfer.getData('img');
+			        var tuozhuai =document.getElementById(id).src;
+//			        console.log(tuozhuai)
+//			        console.log(event.currentTarget).src
+			        document.getElementById(id).src=event.currentTarget.src;
+			        event.currentTarget.src=tuozhuai;
+			        event.currentTarget.style.opacity='';
+                    var num = 0;
+                    var shu =['image/1.jpg','image/2.jpg','image/3.jpg','image/4.jpg','image/5.jpg','image/6.jpg','image/7.jpg','image/8.jpg','image/9.jpg'];      
+			            for (var j = 0; j < 9; j++) {
+			     	    var a = imgs[j].src.split('/');
+			            var aa =a[a.length-1];//0.jpg
+			     	    var bb =a[a.length-2];//image
+			     	    var cc = bb+ '/'+aa;
+			     	    if(cc==shu[j]){
+			     		    num++;
+			     		    console.log(num)
+			     	    }
+			     	    if(num>=9){
+			     		    if(confirm('你赢了，再来一次好吗~')){
+			     			    $('#puzzle').html('');
+//			     			    location.reload()//刷新
+			     			    init()
+			     			    play()
+			     		    }
+			            }
+			        }
+	            }
+		    }
+	    }
+		play()
+		</script>
+</body>
+
+</html>

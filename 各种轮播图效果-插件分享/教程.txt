@@ -1,0 +1,49 @@
+﻿
+============================================== 第一步 ===================================================
+
+<div id="myFocus"><!--焦点图盒子-->
+    <div class="loading"><img src="img/loading.gif" alt="请稍候..." /></div><!--载入画面(可删除)-->
+    <div class="pic"><!--内容列表(li数目可随意增减)-->
+        <ul>
+            <li><a href="#"><img src="img/1a.jpg" thumb="" alt="标题1" text="详细描述1" /></a></li>
+            <li><a href="#"><img src="img/2a.jpg" thumb="" alt="标题2" text="详细描述2" /></a></li>
+            <li><a href="#"><img src="img/3a.jpg" thumb="" alt="标题3" text="详细描述3" /></a></li>
+            <li><a href="#"><img src="img/4a.jpg" thumb="" alt="标题4" text="详细描述4" /></a></li>
+            <li><a href="#"><img src="img/5a.jpg" thumb="" alt="标题5" text="详细描述5" /></a></li>
+        </ul>
+    </div>
+</div>
+
+============================================== 第二步 ===================================================
+
+<script src="js/myfocus-2.0.1.min.js"></script>
+
+============================================== 第三步 ===================================================
+
+<script>
+    myFocus.set({
+        id:'myFocus',           //焦点图盒子ID
+        width:560,              //设置图片区域宽度(像素)
+        height:300,             //设置图片区域高度(像素)
+        pattern:'mF_fancy'      //设置风格
+    });
+</script>
+
+============================================== 第四步（进阶） ===================================================
+
+<script>
+    myFocus.set({
+        id:'myFocus',      //焦点图盒子ID
+        pattern:'mF_fancy',     //设置风格
+        width:560,      //设置图片区域宽度(像素)
+        height:300,      //设置图片区域高度(像素)
+        trigger:'click',        //触发切换模式['click'(鼠标点击)|'mouseover'(鼠标悬停)]
+        txtHeight:'default',    //文字层高度设置[num(数字,单位像素,0表示隐藏文字层,省略设置即为默认高度)]
+        wrap:true,      //是否保留边框(有的话)[true|false]
+        auto:true,      //是否自动播放(切换)[true|false]
+        time:4,     //每次停留时间[num(数字,单位秒)]
+        index:0,        //开始显示的图片序号(从0算起)[num(数字)]
+        loadIMGTimeout:1,       //载入图片的最长等待时间(Loading画面时间)[num(数字,单位秒,0表示不等待直接播放)]
+        delay:100      //触发切换模式中'mouseover'模式下的切换延迟[num(数字,单位毫秒)]隐藏
+    });
+</script>

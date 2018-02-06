@@ -1,0 +1,98 @@
+<!DOCTYPE >
+<html>
+<title>图片截图效果</title>
+<head>
+	<script src="jquery.js"></script>
+	<meta charset="utf-8">
+	<style>
+		body,
+		html,
+		div,
+		img {
+			margin: 0;
+			padding: 0;
+		}
+		
+		div {
+			width: 200px;
+			height: 200px;
+			position: absolute;
+		}
+		
+		img {
+			width: 1200px;
+			height: 650px;
+			cursor: crosshair;
+		}
+		
+		#photo {
+			opacity: 0.5;
+			margin: 25px 0 0 35px;
+		}
+		
+		#layer {
+			border: 2px solid #000;
+			background: #000;
+		}
+		
+		.photoBox {
+			border: 3px solid #FFF;
+			overflow: hidden;
+			top: 420px;
+			left: 1060px;
+		}
+	</style>
+
+</head>
+
+<body>
+	<div id="layer">
+	</div>
+	<img src="k.jpg" id="photo" />
+	<br>
+	<script type="text/javascript">
+			$(document).ready(function()
+				{
+					var minLeft = $('#layer').width() / 2 + $('img').offset().left;
+					var maxLeft = $('img').width() + $('img').offset().left - $('#layer').width() / 2;
+					var minTop = $('#layer').height() / 2 + $('img').offset().top;
+					var maxTop = $('img').height() + $('img').offset().top - $('#layer').height() / 2;
+
+					var move = function(ev) {
+						var oEv = ev || event;
+						if (oEv.clientX < minLeft || oEv.clientX > maxLeft) return;
+						if (oEv.clientY < minTop || oEv.clientY > maxTop) return;
+						var left = oEv.clientX - $('#layer').width() / 2;
+						var top = oEv.clientY - $('#layer').height() / 2;
+						$('#layer').css('left', left + 'px').css('top', top + 'px');
+					};
+					
+					var onClick = function() {
+						$('.photoBox').remove();
+						$('<div></div>').addClass('photoBox')
+							.appendTo('body').append('<img />')                                                                                                                                                                                                                                                                                                                             
+							.children()
+							.attr({
+								'src': $(this).attr('src')
+							})
+						    .css({
+								'marginLeft': -($('#layer')
+									.offset().left - 65) + 'px',
+								'marginTop': -($('#layer').offset().top - 30) + 'px'
+							})
+							.end()
+							.animate({
+								left: 1025 + 'px'
+							}, 'slow');
+					};
+
+					$('img').bind('click', onClick).bind('mousemove', move);
+					$('#layer').css({
+						'top': top  + 'px',
+						'left':left  + 'px'
+					})
+				});
+		</script>
+</body>
+
+</html>

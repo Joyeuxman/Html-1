@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>粒子</title>
+		<style type="text/css">
+			* {
+				box-sizing: border-box;
+			}
+			
+			html {
+				height: 100%;
+			}
+			
+			body {
+				height: 100%;
+				margin: 0;
+				background: #000;
+				overflow: hidden;
+			}
+			
+			.circle {
+				position: absolute;
+				text-align: center;
+				display: inline-block;
+				border-radius: 50%;
+				background: #fff;
+			}
+		</style>
+	</head>
+
+	<body>
+
+	</body>
+	<script type="text/javascript">
+		
+
+		function creatDiv() {
+
+			var div = document.createElement('div');
+
+			document.body.appendChild(div);
+
+			div.className = 'circle';
+
+			var x = document.body.offsetHeight / 2;
+
+			var y = document.body.offsetWidth / 2;
+
+			var vx = Math.random() * 8 - 4;
+
+			var vy = Math.random() * 8 - 4;
+
+			var growth = (Math.abs(vx) + Math.abs(vy)) * 0.001;
+
+			var size = Math.random() * 4+2;
+			
+			var getRandomColor = function() {
+			
+			    return '#' + (Math.random() * 0xffffff << 0).toString(16);
+			
+		    }
+
+			function grow() {
+
+				x = x + vx;
+
+				y = y + vy;
+
+				size = size + growth;
+
+				div.style.width = size + 'px';
+
+				div.style.height = size + 'px';
+
+				div.style.fontSize = size + 'px';
+
+				div.style.top = x + 'px';
+
+				div.style.left = y + 'px';
+				
+				div.style.color = '#888';
+
+				requestAnimationFrame(grow);
+
+			}
+
+			grow();
+			
+//			var h = Math.ceil(Math.random() * 11);
+//			
+//			if(h == 1){
+//				
+//				div.innerHTML = '侯文涛';
+//			}
+//			else if(h == 2){
+//				
+//				div.innerHTML = '韩湘';
+//			}
+//			else if(h == 3){
+//				
+//				div.innerHTML = '张涛';
+//			}
+//			else if(h == 4){
+//				
+//				div.innerHTML = '吕科峰';
+//			}
+//			else if(h == 5){
+//				
+//				div.innerHTML = '李佳恒';
+//			}
+//			else if(h == 6){
+//				
+//				div.innerHTML = '黄岩';
+//			}
+//			else if(h == 7){
+//				
+//				div.innerHTML = '冯先森';
+//			}
+//			
+//			else if(h == 8){
+//				
+//				div.innerHTML = '高俊豪';
+//			}
+//			else if(h == 9){
+//				
+//				div.innerHTML = '陈强';
+//			}
+//			else if(h == 10){
+//				
+//				div.innerHTML = '段海鹏';
+//			}
+//			else{
+//				
+//				div.innerHTML = '钟奇柏';
+//			}
+			
+			
+			setTimeout(function() {
+
+				div.remove();
+
+			}, 10000)
+
+			requestAnimationFrame(creatDiv);
+
+		}
+
+		creatDiv();
+
+
+	</script>
+
+</html>

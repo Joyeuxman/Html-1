@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>字母顺序排序定位城市</title>
+    <link rel="stylesheet" href="css/sort.css">
+    <script src="libs/angular.js"></script>
+    <script src="js/index.js"></script>
+</head>
+
+<body ng-app="Sort">
+
+    <header class="fixed">
+        <div class="header">
+            通讯录
+        </div>
+    </header>
+
+    <div id="letter"></div>
+
+    <div class="sort_box" ng-controller="SortController">
+        <div ng-repeat='city in cityArray'>
+            <div class="sort_list">
+               <div class="num_logo"><img src="images/img.png" /></div>
+                <div class="num_name">{{city}}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="initials">
+        <ul>
+            <li><img src="images/068.png"></li>
+        </ul>
+    </div>
+
+    <script src="libs/jquery.js"></script>
+    <script src="js/jquery.charfirst.pinyin.js"></script>
+    <script src="js/sort.js"></script>
+</body>
+</html>

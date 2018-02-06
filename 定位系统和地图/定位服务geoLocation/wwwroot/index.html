@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			html {
+				height: 100%;
+			}
+			
+			body {
+				height: 100%;
+				margin: 0;
+			}
+			
+			#map-view {
+				height: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="map-view">
+
+		</div>
+	</body>
+	<script src="http://api.map.baidu.com/api?v=2.0&ak=ck6oSxPYCgGLYKc17YZXanOC"></script>
+	<script>
+		console.dir(navigator.geolocation);
+
+		if(navigator.geolocation) {
+			console.log("定位系统可以使用");
+       
+			//getCurrentPosition，获得当前设备所在的地理位置。
+			//第一个参数是获得位置成功时的回调函数，第二个参数是获得
+			//失败时的回调函数，第三个参数是一个配置对象。
+			navigator.geolocation.getCurrentPosition(function(position) {
+				console.log(position);
+
+				//经度:113.7459
+				console.log(position.coords.longitude)
+         
+				//纬度:34.7296
+				console.log(position.coords.latitude)
+//              console.log(position.address.city)
+//				//海拔
+//				console.log(position.coords.altitude)
+//
+//				//坐标精度
+//				console.log(position.coords.accuracy)
+//
+//				//方向
+//				console.log(position.coords.heading)
+//
+//				//速度
+//				console.log(position.coords.speed)
+
+				createMap(position.coords.longitude, position.coords.latitude)
+			}, function(error) {
+				console.dir(error);
+				createMap(113.74593997946309, 34.72965279657533)
+			}, {
+				//使用高精度定位（GPS定位）
+				enableHighAccuracy: true,
+				//超时时间，当超过10秒还未获取位置时，按照失败处理
+				timeout: 10000,
+				//最大缓存存储时间，每隔多少毫秒获取一次位置
+				maximumAge: 2000
+			});
+
+		} else {
+			console.log("您的浏览器不支持定位系统");
+//			createMap(113.66055499999999, 34.800156)
+			createMap(113.74593997946309, 34.72965279657533)
+		}
+		//		
+//      createMap(113.74593997946309, 34.72965279657533)
+		function createMap(longitude, latitude) {
+			//创建地图对象
+			var map = new BMap.Map("map-view");
+			//创建一个点对象
+			var point = new BMap.Point(longitude, latitude);
+
+			//初始化地图，设置地图显示中心点和缩放尺度。
+//			console.log(point)
+			map.centerAndZoom(point, 16);
+			//		map.centerAndZoom("新郑市");
+
+			//启用鼠标滚轮缩放
+			map.enableScrollWheelZoom(true);
+//			map.setCurrentCity("郑州");
+
+			//添加各种控件
+//			map.addControl(new BMap.NavigationControl()); //缩放杆
+//			var navigationControl = new BMap.NavigationControl({
+//				// 靠左上角位置
+//				anchor: BMAP_ANCHOR_TOP_LEFT,
+//				// LARGE类型
+//				type: BMAP_NAVIGATION_CONTROL_LARGE,
+//				// 启用显示定位
+//				enableGeolocation: true
+//			});
+//			map.addControl(navigationControl);
+
+			//比例尺
+//			map.addControl(new BMap.ScaleControl({
+//				anchor: BMAP_ANCHOR_TOP_LEFT
+//			}));
+//			map.addControl(new BMap.OverviewMapControl());
+
+			//缩略图
+//			map.addControl(new BMap.OverviewMapControl({
+//				isOpen: true,
+//				anchor: BMAP_ANCHOR_BOTTOM_RIGHT
+//			}))
+
+//			map.addControl(new BMap.MapTypeControl()); //地图显示类型
+//			map.addControl(new BMap.GeolocationControl());
+
+//			// 添加定位控件
+//			var geolocationControl = new BMap.GeolocationControl();
+//			geolocationControl.addEventListener("locationSuccess", function(e) {
+//				// 定位成功事件
+//				var address = '';
+//				address += e.addressComponent.province;
+//				address += e.addressComponent.city;
+//				address += e.addressComponent.district;
+//				address += e.addressComponent.street;
+//				address += e.addressComponent.streetNumber;
+//				alert("当前定位地址为：" + address);
+//			});
+//			geolocationControl.addEventListener("locationError", function(e) {
+//				// 定位失败事件
+//				alert(e.message);
+//			});
+//			map.addControl(geolocationControl);
+
+			//标准坐标转百度坐标
+			var convertor = new BMap.Convertor();
+			var pointArr = [];
+			pointArr.push(point);
+			convertor.translate(pointArr, 1, 5, function(data) {
+				//添加覆盖物
+				//      	console.log(data);
+				var mark = new BMap.Marker(data.points[0]);
+				map.addOverlay(mark);
+			});
+
+				
+		}
+
+//		相关示例网址：http://developer.baidu.com/map/jsdemo.htm#a1_2
+//      http://blog.csdn.net/smok56888/article/details/20628161
+	</script>
+
+</html>

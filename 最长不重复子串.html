@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>最长不重复子串</title>
+</head>
+
+<body>
+  <script>
+    const lengthOfLongestSubstring = (s) => {
+      const map = {};
+      let left = 0;
+      return s.split('').reduce((max, v, i) => {
+        left = map[v] >= left ? map[v] + 1 : left;
+        map[v] = i;
+        console.log(Math.max(max, i - left + 1));
+        console.log(map)
+        return Math.max(max, i - left + 1);
+      }, 0)
+    }
+    lengthOfLongestSubstring('pwwkew');
+  </script>
+</body>
+
+</html>

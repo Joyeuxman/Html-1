@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="id" width="400" height="400"></canvas>
+    <script>
+        function drawSquare() {
+            var canvas = document.getElementById('id')
+            if (canvas == null)
+                return false;
+            // context是一个封装了很多绘图功能的对象
+            // 获得到context的方法： 
+            var context = canvas.getContext("2d");
+            // fillRect 填充矩形
+            // 第一个参数为矩形起点x坐标,第二个参数为y坐标，第三个为矩形长度，第四个为矩形的宽度。
+            context.fillRect(0, 0, 100, 100);
+            //strokeRect 绘制矩形边框
+            context.strokeRect(120, 0, 100, 100);
+
+            //设置纯色
+            context.fillStyle = "red";
+            context.strokeStyle = "blue";
+            context.fillRect(0, 120, 100, 100);
+            context.strokeRect(120, 120, 100, 100);
+
+            //设置透明度实践证明透明度值>0,<1值越低，越透明，值>=1时为纯色，值<=0时为完全透明
+            context.fillStyle = "rgba(255,0,0,0.2)";
+            context.strokeStyle = "rgba(255,0,0,0.2)";
+            context.fillRect(240,0 , 100, 100);
+            context.strokeRect(240, 120, 100, 100);
+            // context.clearRect(50,50,240,120)
+        }
+        drawSquare()
+        
+    </script>
+</body>
+
+</html>

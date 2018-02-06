@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>BFC</title>
+  <style>
+    div {
+      border: 1px solid black;
+      overflow: hidden;
+    }
+
+    #div2 {
+      background: red;
+      margin-bottom: 20px;
+      /* display: inline-block; */
+      overflow: hidden;
+      /* float:left; */
+    }
+
+    #div3 {
+      background: blue;
+      margin-top: 20px;
+      /* float:left; */
+    }
+  </style>
+</head>
+
+<body>
+  <div id="div1">
+    <div id="div2">div2div2div2div2div2</div>
+    <!-- <div> -->
+      <div id="div3">div3div3div3div3div3</div>
+    <!-- </div> -->
+  </div>
+
+
+</body>
+
+</html>

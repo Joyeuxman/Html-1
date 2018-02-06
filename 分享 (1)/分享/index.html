@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>无标题文档</title>
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <video src="Intermission-Walk-in_512kb.mp4" id="v1"></video><br>
+    <input type="button" value="播放">
+
+    <input type="button" value="静音">
+
+    <script>
+	window.onload = function(){
+	var oV = document.getElementById('v1');
+	var aInput = document.getElementsByTagName('input');
+	
+	
+	aInput[0].onclick = function(){
+        // paused暂停状态
+		if(oV.paused){
+			oV.play();
+			this.value = '暂停';
+			
+		}
+		else{
+			oV.pause();
+			this.value = '播放';
+			
+		}
+	};
+	
+	
+	
+	
+	aInput[1].onclick = function(){
+        // muted消除声音
+		if(oV.muted){
+			oV.muted = false;
+			this.value = '静音';
+		}
+		else{
+			oV.muted = true;
+			this.value = '取消静音';
+		}
+	}
+}
+	
+</script>
+</body>
+
+</html>

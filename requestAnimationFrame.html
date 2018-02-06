@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    div{
+      width:900px;
+      height:200px;
+      border:1px solid red;
+    }
+  </style>
+</head>
+<div id="SomeElementYouWantToAnimate"></div>
+<body>
+  <script>
+    window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
+    var start = null;
+    var d = document.getElementById('SomeElementYouWantToAnimate');
+    function step(timestamp) {
+      if (start === null) start = timestamp;
+      var progress = timestamp - start;
+      d.style.width = Math.min(progress / 10, 600) + "px";
+      if (progress < 20000) {
+        requestAnimationFrame(step);
+      }
+    }
+    requestAnimationFrame(step);
+  </script>
+</body>
+
+</html>

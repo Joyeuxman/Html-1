@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="jquery.js"></script>
+    <title></title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #outer {
+            width: 350px;
+            margin: 40px auto;
+            /*border: 1px solid black;*/
+            padding: 10px;
+            box-shadow: 5px 5px 5px gray;
+        }
+        
+        #title {
+            background-color: grey;
+            height: 25px;
+            color: lightgray;
+        }
+        
+        input {
+            width: 65px;
+        }
+        
+        #outer ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        #outer ul li {
+            margin-bottom: 10px;
+        }
+        
+        #inner {
+            width: 100%;
+            height: 200px;
+            text-align: center;
+            font-size: 40px;
+            line-height: 200px;
+            border: 1px solid lightcoral;
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        #date {
+            color: brown;
+        }
+        
+        #dianji {
+            font-size: 20px;
+            position: absolute;
+            left: 90px;
+            top: 5px;
+        }
+        
+        #qiu {
+            font-size: 60px;
+            color: white;
+            background-color: red;
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            width: 100%;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="outer">
+        <p id="title">程序员求签</p>
+        <p id="date"></p>
+        <ul>
+            <li>1、编码测试之前可求一签逢凶化吉。</li>
+            <li>2、选择所求之事在心中默念，单击求即可求签。</li>
+            <li>3、同一件事只能求一次，第二次就不灵了。</li>
+        </ul>
+        <input type="button" name="" id="" value="编码" />
+        <input type="button" name="" id="" value="调试BUG" />
+        <input type="button" name="" id="" value="约会" />
+        <input type="button" name="" id="" value="其他" />
+
+        <div id="inner">
+            <p id="dianji">请点击所求之事</p>
+            <span id="qiu">
+					求
+				</span>
+        </div>
+    </div>
+    <script>
+        // 页面加载完成，执行下面函数
+        $(function() {
+            // 定义日期时间函数
+            function time() {
+                // new一个时间对象
+                var mydate = new Date();
+                // toLocaleString() 方法返回一个 String 对象，这个对象中包含了用当前区域设置的默认格式表示的日期。
+                $('#date').text('今天是' + mydate.toLocaleString());
+            }
+            setInterval(time, 1000)
+
+            function jiequ() {
+                var text1 = $('#outer ul li').eq(0).text();
+                // substr() 方法可在字符串中抽取从 start 下标开始的指定数目的字符
+                // 第一个参数是index，第二个参数是长度length
+                var text2 = text1.substr(1) + text1.substr(0, 1);
+                $('#outer ul li').eq(0).text(text2);
+                var text3 = $('#outer ul li').eq(1).text();
+                var text4 = text3.substr(1) + text3.substr(0, 1);
+                $('#outer ul li').eq(1).text(text4);
+                var text5 = $('#outer ul li').eq(2).text();
+                var text6 = text5.substr(1) + text5.substr(0, 1);
+                $('#outer ul li').eq(2).text(text6);
+            }
+            setInterval(jiequ, 200)
+                // 定义数组
+            var myarray = [
+                ['非常吉', '大吉', '小吉', '吉', '凶', '小凶', '大凶', '非常凶'],
+                ['非常吉', '大吉', '小吉', '吉', '凶', '小凶', '大凶', '非常凶'],
+                ['去约会吧~', '基友也不错', '【微笑】', '三垒', '单身狗！', '有对象嘛？', '还想约会？', '约会遇BUG'],
+                ['哈哈哈', '有对象了？', '没BUG了？', '颈椎病指南', '腰椎病指南', 'hello_world', '【微笑】', '-_- ||']
+            ]
+            var alertText = ['信我的卦 今天不适合编码 洗洗睡吧', '信我的卦 今天不适合调BUG 洗洗睡吧', '程序员还想去约会？', '别想其他的了 敲代码吧']
+                // 点击按钮时，执行函数
+            $("#outer input:button").click(function() {
+                // next()取得一个包含匹配的元素集合中每一个元素紧邻的后面同辈元素的元素集合(),并且显示
+                $("#dianji").hide().next().show();
+                // index()搜索匹配的元素，并返回相应元素的索引值，从0开始计数。
+                var index = $(this).index() - 3;
+                // 点击事件，执行函数
+                $("#qiu").click(function(ev) {
+                    var num = Math.floor(Math.random() * 8);
+                    console.log(index);
+                    console.log(num);
+                    // 判断num的值
+                    if (num == 0 || num == 1 || num == 2 || num == 3) {
+                        // 
+                        $(this).text(myarray[index][num]);
+                        //								
+                    } else {
+                        $(this).text(myarray[index][num]);
+                        alert(alertText[index]);
+                    }
+                    //	取消绑定的点击事件					
+                    $(this).off('click');
+                })
+            })
+        })
+    </script>
+</body>
+
+</html>

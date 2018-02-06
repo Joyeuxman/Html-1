@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模拟AppStore下载特效</title>
+    <style>
+        img {
+            width: 100%;
+            height: auto
+        }
+
+        canvas {
+            border-radius: 17px;;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        div {
+            display: block;
+            border-radius: 18px;
+            margin: 100px auto;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+   
+    <!--<img src="images/300.png" alt="">-->
+     <img src=" http://img1.imgtn.bdimg.com/it/u=2697637792,4081105375&fm=206&gp=0.jpg" alt="">
+    <canvas id="canvas"></canvas>
+</div>
+
+<script>
+    var canvas = document.getElementById ( 'canvas' ),
+            context = canvas.getContext ( '2d' );
+
+    canvas.width = canvas.height = 200;
+    canvas.parentNode.style.width = canvas.width + "px";
+    canvas.parentNode.style.height = canvas.height + "px";
+    context.fillStyle = 'rgba(0,0,0,.5)';
+    context.fillRect ( 0, 0, canvas.width, canvas.height );
+
+    var x = canvas.width >> 1,
+            y = canvas.height >> 1,
+            r = canvas.width >> 1;
+// 源图像是透明的，在源图像外面的能被显示，源图像是预加载的图像，目标图像是已经有的图像
+//    在源图像外显示目标图像
+    context.globalCompositeOperation = 'destination-out';
+    context.beginPath ();
+    var ang = - 90;
+    context.fillStyle = '#000';
+
+    var t = setInterval ( function () {
+        ang += 1;
+        if (ang >= 270) {
+            ang = 270;//角度
+            r+=1.5;
+            if(r>=canvas.width+canvas.height){
+                clearInterval(t);
+            }
+            // 圆心，半径。起始位置，结束位置，顺时针
+            context.arc ( x, y, r, - .5 * Math.PI, 1.5 * Math.PI , false );
+            context.closePath ();
+            context.fill ();
+        }
+        else {
+            context.moveTo ( x, y );
+            context.arc ( x, y, r - 5, - .5 * Math.PI, ang * Math.PI / 180, false );
+            context.closePath ();
+            context.fill ();
+        }
+    }, 20 );
+
+</script>
+</body>
+</html>

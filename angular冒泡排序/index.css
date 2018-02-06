@@ -1,0 +1,14 @@
+ h1{
+     text-align: center;
+ }
+ .value-line{
+    margin-bottom: 1px;
+    background: green;
+    color: white;
+}
+.value{
+    position: absolute;
+    margin-left: 800px;
+    margin-top: 50px;
+}
+

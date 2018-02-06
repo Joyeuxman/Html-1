@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				box-sizing: border-box;
+				-moz-user-select: none;
+			}
+			
+			.bg {
+				width: 400px;
+				height: 500px;
+				background: #f0f0f0;
+				margin: 10px auto;
+				padding-top: 60px;
+				box-sizing: border-box;
+				box-shadow: 0 0 10px #999;
+			}
+			
+			.info {
+				width: 70%;
+				margin: 0 auto;
+				background: #999;
+				font-size: 16px;
+				color: #fff;
+				padding: 20px;
+				line-height: 30px;
+			}
+			
+			.reset {
+				width: 90%;
+				height: 40px;
+				margin: 20px 20px;
+				background: #999;
+				border: none;
+				color: #fff;
+				font-size: 20px;
+			}
+			
+			.mimabg {
+				width: 100%;
+				height: 100px;
+				margin-top: 20px;
+				padding: 0 20px;
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+			}
+			
+			.pw {
+				width: 21%;
+				height: 70px;
+				background: #999;
+				color: #fff;
+				text-align: center;
+				font-size: 40px;
+				line-height: 70px;
+				cursor: pointer;
+			}
+			
+			.numbg {
+				width: 100%;
+				height: 140px;
+				margin-top: 60px;
+			}
+			
+			.nums {
+				width: 65px;
+				height: 60px;
+				background: orange;
+				color: #fff;
+				text-align: center;
+				font-size: 40px;
+				line-height: 60px;
+				cursor: pointer;
+				position: absolute;
+				box-shadow: 0 0 5px #999;
+			}
+		</style>
+	</head>
+
+	<body>
+		<main class="bg">
+			
+			<div class="mimabg">
+				<div class="pw"></div>
+				<div class="pw"></div>
+				<div class="pw"></div>
+				<div class="pw"></div>
+			</div>
+
+			<div class="numbg">
+			</div>
+
+			<input type="button" value="刷新" class="reset" />
+		</main>
+		
+		<div class="info">
+		<p>思路：</p>
+		首先判断第一个数字有没有解锁，如果已解锁则判断下一个，如果没有，则在拖动下面数字的时候判断有没有放进第一个密码框里，如果没有放进去则返回原来的位置，如果放进去了，再判断两个数字是不是相等，如果两个数字不相等，则提示密码错误，如果相等，则改变第一个框的属性为已解锁和它的样式，然后再判断第二个数字有没有解锁，依次循环。第四个数字正确的话，则提示解锁成功，在第四个数字解锁成功之前都可以刷新。因为随机数可能出现多个相同的数字，所以每个数字解锁成功的话也让它返回原来的位置，如果隐藏的话就没法解锁下一个相同的数字了，因为当鼠标拖动下面数字的时候，数字的位置就是鼠标的坐标，鼠标的坐标是相对于浏览器窗口的，所以下面数字的定位也要相对于浏览器窗口定位，然后left加上它父元素到浏览器左边的距离，top加上它父元素到浏览器上边的距离，但是当浏览器窗口发生改变的时候下面数字的位置不会改变，所以当浏览器窗口发生改变的时候再重新获取一下它父元素到浏览器左边和上边的距离，当鼠标拖动太快数字出现滞留的时候，把鼠标再放到被拖动的数字上就行了
+				
+		</div>
+	</body>
+	<script type="text/javascript">
+		var pws = document.querySelectorAll('.pw');
+
+		var numbg = document.querySelector('.numbg');
+
+		var shuaxin = document.querySelector('.reset');
+
+		var arr = [];
+
+		for(var i = 0; i < pws.length; i++) {
+
+			pws[i].innerHTML = Math.floor(Math.random() * 10);
+
+			arr.push({
+				pass: false,
+			})
+
+		}
+
+		shuaxin.onclick = function() {
+
+			if(arr[3].pass == false) {
+
+				for(var i = 0; i < pws.length; i++) {
+
+					pws[i].innerHTML = Math.floor(Math.random() * 10);
+
+					arr[i].pass = false
+
+				}
+
+			}
+
+		}
+
+		var weizhi = []
+
+		for(var i = 0; i < 2; i++) {
+
+			for(var k = 0; k < 5; k++) {
+
+				var nums = document.createElement('div');
+
+				numbg.appendChild(nums);
+
+				nums.className = 'nums';
+
+//				nums.draggable = true;
+
+				var top1 = i * 70;
+
+				var left1 = 18 + k * 75;
+
+				var Top = numbg.getBoundingClientRect().top + top1 + 'px';
+
+				var Left = numbg.getBoundingClientRect().left + left1 + 'px';
+
+				nums.style.top = Top;
+
+				nums.style.left = Left;
+
+				nums.innerHTML = i * 5 + k;
+
+				weizhi.push({
+					top: Top,
+					left: Left
+				})
+
+			}
+
+		}
+
+		var nums = document.querySelectorAll('.nums')
+
+		for(var i = 0; i < nums.length; i++) {
+
+			var num = nums[i]
+
+			num.index = i;
+
+			num.onmousedown = function() {
+
+				this.style.zIndex = '20';
+
+				this.onmousemove = function(e) {
+
+					var x = this.innerHTML;
+
+					this.style.transition = '0s';
+
+					this.style.top = e.pageY - 30 + 'px';
+
+					this.style.left = e.pageX - 30 + 'px';
+
+				}
+
+			}
+
+			nums[i].onmouseup = function() {
+
+				var x = Number(this.innerHTML)
+
+				var numTop = this.getBoundingClientRect().top;
+
+				var numLeft = this.getBoundingClientRect().left;
+
+				if(arr[0].pass == false) {
+
+					var y = Number(pws[0].innerHTML)
+
+					var pwTop = pws[0].getBoundingClientRect().top;
+
+					var pwLeft = pws[0].getBoundingClientRect().left;
+
+					if((pwTop + 10) > numTop && numTop > pwTop && (pwLeft + 10) > numLeft && numLeft > pwLeft) {
+
+						if(x == y) {
+
+							arr[0].pass = true
+
+							pws[0].style.background = 'orange'
+
+						} else {
+
+							alert('密码错误1')
+
+						}
+
+					}
+
+				} else if(arr[1].pass == false) {
+
+					var y = Number(pws[1].innerHTML)
+
+					var pwTop = pws[1].getBoundingClientRect().top;
+
+					var pwLeft = pws[1].getBoundingClientRect().left;
+
+					if((pwTop + 10) > numTop && numTop > pwTop && (pwLeft + 10) > numLeft && numLeft > pwLeft) {
+
+						if(x == y) {
+
+							arr[1].pass = true
+
+							pws[1].style.background = 'orange'
+
+						} else {
+
+							alert('密码错误2')
+
+						}
+
+					}
+
+				} else if(arr[2].pass == false) {
+
+					var y = Number(pws[2].innerHTML)
+
+					var pwTop = pws[2].getBoundingClientRect().top;
+
+					var pwLeft = pws[2].getBoundingClientRect().left;
+
+					if((pwTop + 10) > numTop && numTop > pwTop && (pwLeft + 10) > numLeft && numLeft > pwLeft) {
+
+						if(x == y) {
+
+							arr[2].pass = true
+
+							pws[2].style.background = 'orange'
+
+						} else {
+
+							alert('密码错误3')
+
+						}
+
+					}
+
+				} else if(arr[3].pass == false) {
+
+					var y = Number(pws[3].innerHTML)
+
+					var pwTop = pws[3].getBoundingClientRect().top;
+
+					var pwLeft = pws[3].getBoundingClientRect().left;
+
+					if((pwTop + 10) > numTop && numTop > pwTop && (pwLeft + 10) > numLeft && numLeft > pwLeft) {
+
+						if(x == y) {
+
+							arr[3].pass = true;
+
+							pws[3].style.background = 'orange'
+
+//							alert('解锁成功');
+							
+							location = 'http://www.baidu.com';
+
+						} else {
+
+							alert('密码错误4')
+
+						}
+
+					}
+
+				}
+
+				this.style.zIndex = '';
+
+				this.style.transition = '0.2s';
+
+				this.style.top = weizhi[this.index].top;
+
+				this.style.left = weizhi[this.index].left;
+
+				this.onmousemove = function() {
+
+				}
+
+			}
+
+		}
+
+		window.onresize = function() {
+
+			var weizhi = []
+
+			for(var i = 0; i < 2; i++) {
+
+				for(var k = 0; k < 5; k++) {
+
+					var top1 = i * 70;
+
+					var left1 = 18 + k * 75;
+
+					var Top = numbg.getBoundingClientRect().top + top1 + 'px';
+
+					var Left = numbg.getBoundingClientRect().left + left1 + 'px';
+
+					nums[i * 5 + k].style.top = Top;
+
+					nums[i * 5 + k].style.left = Left;
+
+					weizhi.push({
+						top: Top,
+						left: Left
+					})
+
+				}
+
+			}
+
+			for(var i = 0; i < nums.length; i++) {
+
+				var num = nums[i]
+
+				num.index = i;
+
+				num.onmousedown = function() {
+
+					this.style.zIndex = '20';
+
+					this.onmousemove = function(e) {
+
+						this.style.transition = '0s';
+
+						this.style.top = e.pageY - 30 + 'px';
+
+						this.style.left = e.pageX - 30 + 'px';
+
+					}
+
+				}
+
+				nums[i].onmouseup = function() {
+
+					var x = Number(this.innerHTML)
+
+					var numTop = this.getBoundingClientRect().top;
+
+					var numLeft = this.getBoundingClientRect().left;
+
+					if(arr[0].pass == false) {
+
+						var y = Number(pws[0].innerHTML)
+
+						var pwTop = pws[0].getBoundingClientRect().top;
+
+						var pwLeft = pws[0].getBoundingClientRect().left;
+
+						if((pwTop + 10) > numTop && numTop > pwTop && (pwLeft + 10) > numLeft && numLeft > pwLeft) {
+
+							if(x == y) {
+
+								arr[0].pass = true
+
+								pws[0].style.background = 'orange'
+
+							} else {
+
+								alert('密码错误1')
+
+							}
+
+						}
+
+					} else if(arr[1].pass == false) {
+
+						var y = Number(pws[1].innerHTML)
+
+						var pwTop = pws[1].getBoundingClientRect().top;
+
+						var pwLeft = pws[1].getBoundingClientRect().left;
+
+						if((pwTop + 10) > numTop && numTop > pwTop && (pwLeft + 10) > numLeft && numLeft > pwLeft) {
+
+							if(x == y) {
+
+								arr[1].pass = true
+
+								pws[1].style.background = 'orange'
+
+							} else {
+
+								alert('密码错误2')
+
+							}
+
+						}
+
+					} else if(arr[2].pass == false) {
+
+						var y = Number(pws[2].innerHTML)
+
+						var pwTop = pws[2].getBoundingClientRect().top;
+
+						var pwLeft = pws[2].getBoundingClientRect().left;
+
+						if((pwTop + 10) > numTop && numTop > pwTop && (pwLeft + 10) > numLeft && numLeft > pwLeft) {
+
+							if(x == y) {
+
+								arr[2].pass = true
+
+								pws[2].style.background = 'orange'
+
+							} else {
+
+								alert('密码错误3')
+
+							}
+
+						}
+
+					} else if(arr[3].pass == false) {
+
+						var y = Number(pws[3].innerHTML)
+
+						var pwTop = pws[3].getBoundingClientRect().top;
+
+						var pwLeft = pws[3].getBoundingClientRect().left;
+
+						if((pwTop + 10) > numTop && numTop > pwTop && (pwLeft + 10) > numLeft && numLeft > pwLeft) {
+
+							if(x == y) {
+
+								arr[3].pass = true
+
+								pws[3].style.background = 'orange'
+
+								alert('解锁成功')
+								
+								location = 'http://www.baidu.com';
+
+							} else {
+
+								alert('密码错误4')
+
+							}
+
+						}
+
+					}
+
+					this.style.zIndex = '';
+
+					this.style.transition = '0.2s';
+
+					this.style.top = weizhi[this.index].top;
+
+					this.style.left = weizhi[this.index].left;
+
+					this.onmousemove = function() {
+
+					}
+
+				}
+
+			}
+
+		}
+	</script>
+
+</html>

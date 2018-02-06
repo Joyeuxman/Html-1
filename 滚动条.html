@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>滚动条</title>
+  <style>
+    /* 设置滚动条的样式 */
+
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-button {
+      width: 0;
+      height: 0;
+    }
+
+    ::-webkit-scrollbar-button:start:increment,
+    ::-webkit-scrollbar-button:end:decrement {
+      display: none;
+    }
+
+    ::-webkit-scrollbar-corner {
+      display: block;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background-color: rgba(0, 0, 0, .2);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      border-radius: 8px;
+      background-color: rgba(0, 0, 0, .5);
+    }
+
+    ::-webkit-scrollbar-track,
+    ::-webkit-scrollbar-thumb {
+      border-right: 1px solid transparent;
+      border-left: 1px solid transparent;
+    }
+
+    ::-webkit-scrollbar-track:hover {
+      background-color: rgba(0, 0, 0, .15);
+    }
+
+    ::-webkit-scrollbar-button:start {
+      width: 10px;
+      height: 10px;
+      background: url(./img/scrollbar_arrow.png) no-repeat 0 0;
+    }
+
+    ::-webkit-scrollbar-button:start:hover {
+      background: url(./img/scrollbar_arrow.png) no-repeat -15px 0;
+    }
+
+    ::-webkit-scrollbar-button:start:active {
+      background: url(./img/scrollbar_arrow.png) no-repeat -30px 0;
+    }
+
+    ::-webkit-scrollbar-button:end {
+      width: 10px;
+      height: 10px;
+      background: url(./img/scrollbar_arrow.png) no-repeat 0 -18px;
+    }
+
+    ::-webkit-scrollbar-button:end:hover {
+      background: url(./img/scrollbar_arrow.png) no-repeat -15px -18px;
+    }
+
+    ::-webkit-scrollbar-button:end:active {
+      background: url(./img/scrollbar_arrow.png) no-repeat -30px -18px;
+    }
+    .div1{
+      width:2000px;
+      height: 1000px;
+      border:1px solid #000;
+    }
+    .div2{
+      width:2000px;
+      height: 1000px;
+      border:1px solid #000;
+    }
+    .div3{
+      width:2000px;
+      height: 1000px;
+      border:1px solid #000;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="div1">
+    <div class="div2"></div>
+    <div class="div3"></div>
+  </div>
+</body>
+
+</html>

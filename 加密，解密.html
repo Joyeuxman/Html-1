@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>加密，解密</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <!--用户界面，设置一个文本域，一个文本编辑框，两个按钮-->
+    <textarea id="TextArea1" style="width: 331px; height: 211px"></textarea>&nbsp;<br /> 密钥：&nbsp;
+    <input id="Password1" type="password" />&nbsp;
+    <input id="BtnCode" type="button" value="加密" onclick="return BtnCode_onclick()" style="width: 57px" />
+    <input id="BtnEncode" style="width: 55px" type="button" value="解密" onclick="return BtnEncode_onclick()" />
+    <!--加密解密可以使用位异或运算符实现，因为A与B异或可以得到C，C与B异或可以得到A。因此B将成为秘钥。
+    字符串对象charCodeAt方法可以取得一个字符unicode编码，可以对此编码进行加密运算。
+    formCharCode方法可以讲一个unicode编码还原为字符，因此可以从加密后的unicode编码串还原字符串-->
+    <script>
+        // 假设加密后的字符串
+    var jiami;
+    // 解密后的字符串
+    var jiemi;
+    // 加密解密函数
+    function CodeAndEncode( pkey, date ){
+    // 已加密或解密的字符序列
+    var codedStr = "";
+    // 对信息字符串逐个加密
+    for( i = 0; i < date.length; i++ ){
+        // 已加密或解密的字符的unicode编码
+		var dateCoded;
+        // 秘钥串的每个字符与串中当前字符进行位异或
+		for( j = 0; j < pkey.length; j++ ){
+            // charCodeAt()方法用于选取字符串中某一位置上的单个字符
+            // 从秘钥串中提取一个字符的unicode编码
+			var keyCoded = pkey.charCodeAt( j );
+            // 进行位异或运算
+			var dateCoded = date.charCodeAt(i) ^ keyCoded;
+		}
+        // fromCharCode() 可接受一个指定的 Unicode 值，然后返回一个字符串
+        // 该方法是 String 的静态方法，字符串中的每个字符都由单独的 Unicode 数字编码指定。
+        // 使用语法： String.fromCharCode()
+        codedStr += String.fromCharCode( dateCoded );
+    }
+    // 返回信息串
+	return codedStr;
+}
+// “加密”按钮的单击事件处理程序
+function BtnCode_onclick(){
+    // 提取要加密的文本
+    var date = TextArea1.value;
+    // 提取秘钥
+    var key = Password1.value;
+    // 进行加密
+    jiami = CodeAndEncode( key, date );
+    // 在文本域中显示加密的结果
+    TextArea1.value = jiami;
+}
+// “解密”按钮的单击事件处理程序
+function BtnEncode_onclick() {
+    // 提取要解密的文本
+     var date = TextArea1.value;
+    //  提取秘钥
+     var key = Password1.value;
+    //  进行解密
+     jiemi = CodeAndEncode( key, date );
+    //  在文本域中显示解密后的文本
+     TextArea1.value = jiemi;
+}
+    </script>
+</body>
+
+</html>

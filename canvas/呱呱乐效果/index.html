@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>呱呱乐</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="x-rim-auto-match" content="none">
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1 maximum-scale=1, user-scalable=no">
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .box {
+            width: 320px;
+            height: 410px;
+            background: url("1.jpg") no-repeat;
+            background-size: 100% 100%;
+            position: relative;
+            /*margin: 0 auto;*/
+        }
+        
+        #myCanvas {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box">
+        <canvas id="Canvas" width="336" height="410"></canvas>
+
+    </div>
+
+</body>
+
+<script>
+	var myCanvas = document.getElementById("Canvas");
+	var can = myCanvas.getContext("2d");
+	var X = myCanvas.width;
+	var Y = myCanvas.height;
+	var oImg = new Image();//建立一个图片图像，就可以使用image里面的属性和方法
+	oImg.src = "4.png";
+	oImg.onload = function(){
+		can.beginPath();//开始绘制
+		can.drawImage(oImg,0,0,X,Y);//在画布上定位图片，名字oimg，放置坐标，宽高
+		can.closePath();
+	}
+
+    // navigator.userAgent.toLowerCase():
+    // Navigator 是HTML DOM中的内置对象，它包含有关浏览器的信息;
+// userAgent是Navigator 的属性方法，可返回由客户机发送服务器的 user-agent 头部的值。作用其实就是返回当前用户所使用的是什么浏览器
+// toLowerCase() 是将获得的信息变成小写的
+	var device = /android|iphone|ipad|ipod|webos|iemobile|opear mini|linux/i.test(navigator.userAgent.toLowerCase());
+	var startEvtName = device?"touchstart":"mousedown";
+	var moveEvtName = device?"touchmove":"mousemove";
+	var endEvtName = device?"touchend":"mouseup";
+	function draw(event){
+        // x，y得到的是鼠标当前的位置
+		var x = device?event.touches[0].clientX:event.clientX;
+		var y = device?event.touches[0].clientY:event.clientY;
+		console.log(x,y);
+		can.beginPath();
+
+        // 在源图像外显示目标图像。只有源图像外的目标图像部分会被显示，源图像是透明的。
+        // 源图像指准备放上去的图像，目标图像是已经放上去的图像
+		can.globalCompositeOperation = "destination-out";
+		can.arc(x,y,20,0,Math.PI*2,false);
+		can.fill();//填充绘图路径
+		can.closePath();// 	创建从当前点回到起始点的路径,封闭图像
+	}
+	//true  捕获 false  冒泡
+    // 添加点击事件
+	myCanvas.addEventListener(startEvtName,function(){
+		myCanvas.addEventListener(moveEvtName,draw,false);
+	},false);
+	myCanvas.addEventListener(endEvtName,function(){
+		myCanvas.removeEventListener(moveEvtName,draw,false);
+	},false);
+
+ var s= 25 | 3;
+ alert(s)
+ var a= 6| 11;
+ alert(a)
+
+</script>
+
+</html>

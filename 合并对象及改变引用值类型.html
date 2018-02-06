@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>合并对象及改变引用值类型</title>
+
+
+
+</head>
+
+<body>
+
+
+  <script src="http://apps.bdimg.com/libs/lodash/3.5.0/lodash.js"></script>
+  <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script>
+    // 1. Object.assign()
+    var o1 = { a: 1, b: 1, c: 1, d: ['a'] };
+    var o2 = { b: 2, c: 2 };
+    // const copy_o1 = _.cloneDeep(o1);
+    // var obj = Object.assign({}, o1, o2);
+    var obj = $.extend({}, o1, o2);
+    
+    
+    // obj.d.push('b');
+    console.log(obj); 
+    console.log('111', o1)
+    // 2. _.assign()
+
+
+  </script>
+</body>
+
+</html>

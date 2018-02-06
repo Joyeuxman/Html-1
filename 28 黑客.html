@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>黑客帝国效果</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+</style>
+<body>
+    <canvas id="canvas"></canvas>
+	<!--一个画布在网页中是一个矩形框，通过 <canvas> 元素来绘制.-->
+	<!--//HTML5 <canvas> 元素用于图形的绘制，通过脚本 (通常是JavaScript)来完成.-->
+    <!--//<canvas> 标签只是图形容器,本身没有绘图能力的。绘制工作必须在 JavaScript 内部完成-->
+    <script>
+        var canvas = document.getElementById('canvas');
+		canvas.height = window.innerHeight;
+		canvas.width = window.innerWidth;
+
+        // 创建 context (环境)对象，即绘图环境
+		var ctx = canvas.getContext('2d');
+		 
+	    var fontSize = 26;
+	    ctx.font = fontSize + 'px arial';
+		var columns = canvas.width/fontSize;
+		// 用于计算输出文字时坐标，所以长度即为列数
+		var drops = [];        
+		//初始值
+		for(var i = 0; i < columns; i++){
+			drops[i] = 1;
+		}
+		function draw(){
+			//设定背景颜色
+			ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; 
+           //设置fillStyle属性可以是CSS颜色，渐变，或图案          
+             ctx.fillRect(0, 0,canvas.width, canvas.height);
+	       // fillRect(x,y,width,height) 方法定义了画布的宽高
+		      ctx.fillStyle = '#0F0';
+	       //文字颜色			
+			for(var i = 0; i < drops.length; i++){
+				var text = Math.floor(Math.random()*10);//随机获取0-9之间的数字
+				ctx.fillText(text, i*fontSize, drops[i]*fontSize);                 
+				if( Math.random() > 0.95 ){
+					drops[i] = 0;
+				}
+				drops[i]++;
+			}		
+		}
+		setInterval(draw, 40);
+    </script>
+</body>
