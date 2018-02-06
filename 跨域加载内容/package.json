@@ -1,0 +1,16 @@
+{
+  "name": "qiushi",
+  "version": "1.0.0",
+  "description": "通过服务器代理 浏览器实现跨域",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server"
+  },
+  "author": "李光辉",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "express": "^4.14.0",
+    "superagent": "^2.3.0"
+  }
+}

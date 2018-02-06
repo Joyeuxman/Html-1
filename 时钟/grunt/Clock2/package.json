@@ -1,0 +1,24 @@
+{
+  "name": "clock",
+  "version": "1.0.0",
+  "description": "Grunt练习",
+  "main": "index.js",
+  "jsFiles": ["js/control.js",
+                    "js/dot.js",
+                    "js/diamond.js",
+                    "js/second.js",
+                    "js/minute.js",
+                    "js/hour.js",
+                    "js/clock.js"],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "常伟",
+  "license": "ISC",
+  "dependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0"
+  }
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        main{
+            width: 1300px;
+            height: 500px;
+            background-image: url(caodi.png);
+            background-repeat: no-repeat;
+            background-size: contain;
+            position: relative;
+    
+        }
+        div:nth-child(1){
+            width: 350px;
+            height: 350px;
+            background-image: url(fengche.png);
+            background-size: contain;
+            position: absolute;
+            top: 49px;
+            left: 115px;
+            animation: xuanzhuan  infinite  linear 2s;
+            
+        }
+        @keyframes xuanzhuan{
+            from{
+                transform: rotate(0);
+            }
+            to{
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div></div>
+        <div></div>
+        <div></div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,186 @@
+html,body,main,ul,ol,li{
+    margin: 0;
+    padding: 0;
+}
+header{
+    height: 32px;
+    line-height: 32px;
+    width: 100%;
+    background-color: black;
+    color: #B5B5B6;
+    font-size: 12px;
+}
+header .midheader{
+    width: 992px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+header .midheader a{
+    text-decoration: none;
+    color: #B5B5B6;
+}
+header .midheader a:hover{
+    color: white;
+}
+header .midheader .leftheader img{
+    margin-right: 9px;
+    cursor: pointer;
+    width: 14px;
+    height: 9px;
+}
+header .midheader .rightheader a{
+    margin-left: 16px;
+}
+header .midheader .rightheader span{
+    margin-left: 16px;
+}
+
+/*以上为顶部黑色区域导航栏部分*/
+.logo{
+    font-size: 13px;
+}
+.logo .midlogo{
+    width: 992px;
+    margin: 0 auto;
+    position: relative;
+}
+.logo .midlogo .middleimage{
+    width: 250px;
+    margin: 0 auto;
+}
+.logo .midlogo .middleimage img{
+    width: 250px;
+}
+/*隐藏会员登录区域*/
+.logo .login{
+    position: absolute;
+    right: 0;
+    top: 12px;
+    cursor: pointer;
+    color: black;
+}
+.logo .login .hiddenlogin{
+    position: absolute;
+    right: 0;
+    width: 260px;
+    padding: 16px;
+    border: 1px solid black;
+    background-color: white;
+    z-index: 10;
+}
+.logo .login .hiddenlogin form{
+    height: 355px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    cursor: text;    
+}
+.logo .login .hiddenlogin form input{
+    border: 1px solid;
+    width: 256px;
+    height: 25px;
+}
+.logo .login .hiddenlogin form section:nth-of-type(6) input{
+    height: 32px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+.logo .login .hiddenlogin form section:nth-of-type(7){
+    cursor: pointer;
+}
+.logo .login .hiddenlogin form section:nth-of-type(9){
+    height: 28px;
+    line-height: 28px;
+    border: 1px solid;
+    text-align: center;
+    cursor: pointer;
+}
+/* nav 导航栏部分*/
+nav ul{
+    width: 992px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+nav ul li{
+    float: left;
+    list-style: none;
+    position: relative;
+    cursor: pointer;
+}
+nav ul li:nth-of-type(2):hover,nav ul li:nth-of-type(3):hover,
+nav ul li:nth-of-type(4):hover,nav ul li:nth-of-type(5):hover,
+nav ul li:nth-of-type(6):hover{
+    border-bottom: 2px solid;
+}
+nav ul li:nth-of-type(9) input{
+    padding-right: 10px;
+    width: 123px;
+    height: 18px;
+    border: 1px solid;
+}
+nav ul li:nth-of-type(9) img{
+    position: absolute;
+    right: 2px;
+    top: 3px;
+    cursor: pointer;
+}
+/*主体区域  hr标签以下*/
+main{
+    width: 992px;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+}
+/*隐藏显示的 查询部分*/
+.yincangnanzhuang,.yincangnvzhuang,.yincangtongzhuang,.yincangpeichen,.yuzhoudiyishuai{
+    display: none;
+    position: absolute;
+    z-index: 10;
+    top: -26px;
+    opacity: 0.95;
+   
+    
+}
+.hiddennanzhuang,.hiddennvzhuang,.hiddentongzhuang,.hiddenpeichen,.zhanggongchang{
+    padding: 65px 155px 22px 65px;
+    width: 772px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    background-color: white;
+}
+.hiddennanzhuang div:nth-of-type(2),.hiddennvzhuang div:nth-of-type(2),.hiddentongzhuang div:nth-of-type(2),.hiddenpeichen div:nth-of-type(2),.zhanggongchang div:nth-of-type(2){
+    border-left: 1px solid #B5B5B6;
+    padding-left: 45px;
+    border-right: 1px solid #B5B5B6;
+    padding-right: 140px;
+}
+.hiddennanzhuang div ul li:nth-of-type(1),.hiddennvzhuang div ul li:nth-of-type(1),.hiddentongzhuang div ul li:nth-of-type(1),.hiddenpeichen div ul li:nth-of-type(1),.zhanggongchang div ul li:nth-of-type(1){
+    margin-top: 22px;
+}
+.hiddennanzhuang div li:nth-of-type(1),.hiddennvzhuang div li:nth-of-type(1),.hiddentongzhuang div li:nth-of-type(1),.hiddenpeichen div li:nth-of-type(1),.zhanggongchang div li:nth-of-type(1){
+    margin-top: 22px;
+}
+.hiddennanzhuang div li,.hiddennvzhuang div li,.hiddentongzhuang div li,.hiddenpeichen div li,.zhanggongchang div li{
+    list-style: none;
+    margin-bottom: 2px;
+}
+.hiddennanzhuang div li a,.hiddennvzhuang div li a,.hiddentongzhuang div li a,.hiddenpeichen div li a,.zhanggongchang div li a{
+    color: #B5B5B6;
+    text-decoration: none;
+}
+.hiddennanzhuang div li a:hover,.hiddennvzhuang div li a:hover,.hiddentongzhuang div li a:hover,.hiddenpeichen div li a:hover,.zhanggongchang div li a:hover{
+    color: black;
+    text-decoration: underline;
+}
+
+/*
+这个文档是所有页面公用的css文档
+*/

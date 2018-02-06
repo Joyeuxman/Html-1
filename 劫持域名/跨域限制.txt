@@ -1,0 +1,57 @@
+跨域限制
+
+跨域限制只存在于浏览器端
+跨域限制只针对于js代码、js的api
+
+iframe标签可以加载（可以同域加载和控制资源，可以跨域加载资源，但是不能通过js跨域控制资源）
+	    网页 (HTML) Web 资源
+    	    Silverlight (XAP) Web 资源
+            图像（JPG、PNG、GIF、ICO）Web 资源
+但是不能跨域加载js、js的api
+iframe 跨域加载页面可以，跨域访问DOM是不可以的，即页面不可控制
+
+
+跨域方法（必须符合特定的条件）
+1.html5新增的cros响应头（条件：对方服务器上添加一个cros响应头,控制权在对方）在移动设备和现代浏览器中支持较多
+	Access-Control-Allow-Origin
+	如在本机的IIS中的HTTP响应头中 
+		在右边点击添加 添加名称为 Access-Control-Allow-Origin
+			       添加值为  *
+
+2.document.domain （条件：使用iframe，根域必须相同，即属于同一个组织或公司）
+	在包含iframe标签的html文件的head标签添加
+		<script>
+                    document.domain = 'h7.com'
+    		</script>
+	在iframe的src属性所指的html文件的head标签中添加
+		<script>
+                    document.domain = 'h7.com'
+    		</script>
+3.JSONP P为padding的缩写，为填充的意思，跨域加载资源（条件：对方必须支持jsonp的数据返回格式），jquery应用比较广泛
+   原理：使用<img>、<link>、<script>等都可以实现跨域加载资源
+   使用<script>跨域加载资源时会出现一个语法错误
+   此时可使用JSONP方式解决掉语法错误
+	创建一个js文件，在该js中调用paddingMe（json）函数,该json即为所需要跨域加载的json数据对象
+	在包含iframe的标签的html文件的head标签中添加
+		<script>
+        	   function paddingMe(json){
+            	     alert(json.name)
+       		   }
+    		</script>
+	在包含iframe的标签的html文件中添加一个script标签用来加载所创建的js文件
+	对此jquery有着很好的支持，详情可查看天气预报实例，
+	关键点是请求方法为$.get,同时dataType属性值为jsonp
+	或者将$.get请求方法改为$.getJSON,同时在url属性的末尾添加上  callback=?
+
+JSONP通过js创建一个script标签（其src属性上要带一个函数名），将script标签添加到DOM上，这浏览器端会去下载相应的文件时，发起一个get请求   服务器端会将函数名提取出来，并把要返回的数据和函数名拼接成函数调用语句
+AJAX： XHR是浏览器端中内置的小对象，其中有跨域限制
+
+4.浏览器端存在着跨域限制，但是服务器端却不存在着跨域限制，可以让自己的服务器代理请求去加载想要的资源
+  	浏览器　→　服务器　→　superagent(6组API） → 糗百服务器 
+							 ↓
+	JSON ← res.json ← Array ← cheerio ←  HTML  ←
+
+
+
+
+

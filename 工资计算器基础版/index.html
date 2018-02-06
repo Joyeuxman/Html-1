@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width;user-scalable=0;initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>工资计算器</title>
+    <link rel="stylesheet/less" href="index.less">
+    <script src="libs/less.js"></script>
+
+</head>
+
+<body ng-app="wageCalc" ng-controller="wageCalcCon" ng-cloak>
+    <form>
+        <header>工资计算器</header>
+        <input type="number" ng-model="wages" ng-change="showResult=false" min="1800" step="100" autocomplete="on" required>
+        <input type="number" ng-model="performance" ng-change="showResult=false" step="100" autocomplete="on">
+        <input type="number" ng-model="bonus" ng-change="showResult=false" step="100" autocomplete="on">
+        <button ng-click="calc()">开始计算</button>
+    </form>
+    <section ng-show="showResult">
+        <dl class="income">
+            <dt>工资总额</dt>
+            <dd>{{result.total | currency:'￥' }}</dd>
+        </dl>
+        <div class="hr"></div>
+        <dl class="pay">
+            <dt>养老 8%</dt>
+            <dd>{{result.shebao.pension | currency:'￥'}}</dd>
+        </dl>
+        <div></div>
+        <dl class="pay">
+            <dt>医疗 2%</dt>
+            <dd>{{result.shebao.medical | currency:'￥'}}</dd>
+        </dl>
+        <div></div>
+        <dl class="pay">
+            <dt>失业 0.5%</dt>
+            <dd>{{result.shebao.unemployment | currency:'￥'}}</dd>
+        </dl>
+        <div></div>
+        <dl class="pay">
+            <dt>工伤 0%</dt>
+            <dd>{{result.shebao.ingury | currency:'￥'}}</dd>
+        </dl>
+        <div></div>
+        <dl class="pay">
+            <dt>生育 0%</dt>
+            <dd>{{result.shebao.bear | currency:'￥'}}</dd>
+        </dl>
+        <div></div>
+        <dl class="pay">
+            <dt>公积金 0%</dt>
+            <dd>{{result.shebao.CRP | currency:'￥'}}</dd>
+        </dl>
+        <div></div>
+        <dl class="pay">
+            <dt>社保统筹</dt>
+            <dd>{{result.shebao.ss | currency:'￥'}}</dd>
+        </dl>
+        <div></div>
+        <div class="hr"></div>
+        <dl class="income">
+            <dt>计税工资</dt>
+            <dd>{{result.taxWage | currency:'￥'}}</dd>
+        </dl>
+        <div></div>
+        <dl class="pay">
+            <dt>个人所得税</dt>
+            <dd>{{result.personalTax | currency:'￥'}}</dd>
+        </dl>
+        <div></div>
+        <div class="hr"></div>
+        <dl class="result">
+            <dt>实发工资</dt>
+            <dd>{{result.finallyWage | currency:'￥'}}</dd>
+        </dl>
+    </section>
+    <nav>
+        <div>计算</div>
+        <div>设置</div>
+        <div>关于</div>
+        <section></section>
+    </nav>
+    <script src="libs/angular.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>

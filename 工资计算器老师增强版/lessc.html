@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet/less" href="工资.less">
+     <script src="less.js"></script>
+</head>
+<body>
+    <header>个税计算器</header>
+    <form action="#">
+        <input type="text" id="jishu" placeholder="请输入您的基本工资">
+        <input type="text" id="jixiao" placeholder="请输入您的绩效工资">
+        <input type="text" id="jiangjin" placeholder="请输入您的奖金">
+        <button>开始计算</button>
+    </form>
+    <!--自定义列表-->
+    <section>
+        <dl>
+            <dt>工资总额</dt>
+            <dd id="zonge">0.00</dd>
+        </dl>
+        <div class="hr"></div>
+        <!--养老-->
+        <dl class="zhichu">
+            <dt>养老 8%</dt>
+            <dd id="yanglao">0.00</dd>
+        </dl>
+        <div></div>
+        <dl class="zhichu">
+            <dt>医疗 2%</dt>
+            <dd id="yiliao">0.00</dd>
+        </dl>
+        <div></div>
+        <dl class="zhichu">
+            <dt>失业 0.5%</dt>
+            <dd id="shiye">0.00</dd>
+        </dl>
+        <div></div>
+        <dl class="zhichu">
+            <dt>工伤 0.0%</dt>
+            <dd id="gongshang">0.00</dd>
+        </dl>
+        <div></div>
+        <dl class="zhichu">
+            <dt>生育 0.0%</dt>
+            <dd id="shengyu">0.00</dd>
+        </dl>
+        <div></div>
+        <dl class="zhichu">
+            <dt>公积金 8%</dt>
+            <dd id="gongjijin">0.00</dd>
+        </dl>
+        <div></div><dl class="zhichu">
+            <dt>社会统筹</dt>
+            <dd id="tongchou">0.00</dd>
+        </dl>
+        <div class="hr"></div>
+        <dl class="">
+            <dt>计税工资</dt>
+            <dd id="jishui">0.00</dd>
+        </dl>
+        <div></div>
+        <dl class="zhichu">
+            <dt>个人所得税</dt>
+            <dd id="shui">0.00</dd>
+        </dl>
+        <div class="hr"></div>
+        <dl class="result">
+            <dt>实发工资</dt>
+            <dd id="shifa">0.00</dd>
+        </dl>
+        <div></div>
+    </section>
+    <script src="calc.js"></script>
+</body>
+</html>

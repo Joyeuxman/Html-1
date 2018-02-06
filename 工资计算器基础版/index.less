@@ -1,0 +1,92 @@
+@color:black;
+@color1:gray;
+.basic {
+        border:1px solid @color;
+        padding:0.4rem;
+        height:2.4rem;
+        width:100%;
+        border-radius:0.3rem;
+        margin: 0.25rem 0;
+}
+*{
+    box-sizing: border-box;
+}
+
+// rem是相对于根元素html
+// em是相对于其父元素
+form{
+    margin:0.5rem;
+    header {
+    background-color: @color;
+    text-align: center;
+    color:white;
+    height:2.8rem;
+    line-height:2.8rem;
+    }
+    input {
+        .basic;
+        &:hover { box-shadow:inset 1px 1px 2px @color;}
+    }
+    button {
+        .basic;
+        background-color: darken(@color,15%);
+        font-size:1.2rem;
+        color:white;
+    }
+}
+section{
+    margin: 0.5rem 0.5rem 3rem 0.5rem;
+    dl {
+        margin:1rem 0;
+        font-size: 0.8rem;
+        color: @color;
+        dt{
+            float:left;
+        }
+        dd{
+            float:right;
+        }
+    }
+    .hr{
+        border-bottom: 1px solid @color;
+        position:relative;
+        top:0.5rem;
+    }
+    .income{
+        color:@color;
+        dd {
+            &:before{ content: '+'}
+        }
+    }
+    .pay{
+        color:@color1;
+        dd {
+            &:before{ content: '-'}
+        }
+    }
+    .result{
+        font-weight: bold;
+        color:red;
+    }
+    div{
+        clear:both;
+    }
+}
+nav{
+    width:100%;
+    position: fixed;
+    bottom: 0px;
+    div{
+        float: left;
+        width:33.33%;
+        border:1px solid @color;
+        text-align: center;
+        height:2.5rem;
+        line-height: 2.5rem;
+        &:hover{ background-color: aqua}
+        &:active{ background-color: orange}
+        &:nth-of-child(2){border:none}
+    }
+    
+    
+}

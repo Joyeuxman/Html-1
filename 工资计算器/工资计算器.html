@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="常伟">
+        <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+        <title>工资计算器</title>
+        <link rel="stylesheet" href="工资计算器.css">
+    </head>
+    <body ng-app="GZCalc" ng-controller="GZCalcController">
+        <header>工资计算器</header>
+        <form>
+            <input type="number" ng-change="showResult=false" ng-model="jiben" required min="1800" autocomplete="off" placeholder="您的基本工资/不能低于最低工资标准">
+            <input type="number" ng-change="showResult=false" ng-model="jixiao" autocomplete="off" placeholder="您的绩效工资">
+            <input type="number" ng-change="showResult=false" ng-model="jiangjin" autocomplete="off" placeholder="您的奖金">
+            <button ng-click="calc()">开始计算</button>
+        </form>
+        <section ng-show="showResult">
+            <dl>
+                <dt>工资总额</dt>
+                <dd>{{result.total | currency:'￥'}}</dd>
+            </dl>
+            <div class="hr"></div>
+            <dl class="zhichu">
+                <dt>养老 8%</dt>
+                <dd>{{result.shebao.yanglao | currency:'￥'}}</dd>
+            </dl>
+            <div></div>
+            <dl class="zhichu">
+                <dt>医疗 2%</dt>
+                <dd>{{result.shebao.yiliao | currency:'￥'}}</dd>
+            </dl>
+            <div></div>
+            <dl class="zhichu">
+                <dt>失业 0.5%</dt>
+                <dd>{{result.shebao.shiye | currency:'￥'}}</dd>
+            </dl>
+            <div></div>
+            <dl class="zhichu">
+                <dt>工伤 0%</dt>
+                <dd>{{result.shebao.gongshang | currency:'￥'}}</dd>
+            </dl>
+            <div></div>
+            <dl class="zhichu">
+                <dt>生育 0%</dt>
+                <dd>{{result.shebao.shengyu | currency:'￥'}}</dd>
+            </dl>
+            <div></div>
+            <dl class="zhichu">
+                <dt>公积金 8%</dt>
+                <dd>{{result.shebao.gongjijin | currency:'￥'}}</dd>
+            </dl>
+            <div></div>
+            <dl class="zhichu">
+                <dt>社保统筹</dt>
+                <dd>{{result.shebao.tongchou | currency:'￥'}}</dd>
+            </dl>
+            <div class="hr"></div>
+            <dl>
+                <dt>计税工资</dt>
+                <dd>{{result.jishui | currency:'￥'}}</dd>
+            </dl>
+            <div></div>
+            <dl class="zhichu">
+                <dt>个人所得税</dt>
+                <dd>{{result.shui | currency:'￥'}}</dd>
+            </dl>
+            <div class="hr"></div>
+            <dl class="result">
+                <dt>实发工资</dt>
+                <dd>{{result.shifa | currency:'￥'}}</dd>
+            </dl>
+        </section>
+    </body>
+    <script src="libs/angular.js"></script>
+    <script src="index.js"></script>
+</html>
